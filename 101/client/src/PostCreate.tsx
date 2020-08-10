@@ -10,6 +10,7 @@ export default () => {
   };
   return (
     <div className="container">
+      <p>Create a new Post</p>
       <form onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <label></label>

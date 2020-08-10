@@ -24,23 +24,25 @@ const PostList = () => {
   return (
     <div className="container">
       <h1>Posts</h1>
-      {postList &&
-        Object.values(postList).map((post) => {
-          return (
-            <div
-              className="card"
-              style={{ width: "30%", marginBottom: "20px" }}
-              key={post.id}
-            >
-              <div className="card-body">
-                <p>{`post id: ${post.id}`}</p>
-                <p>{`post title: ${post.title}`}</p>
-                <CommentList postId={post.id}></CommentList>
-                <CommentCreate postId={post.id}></CommentCreate>
+      <div className="card-group">
+        {postList &&
+          Object.values(postList).map((post) => {
+            return (
+              <div
+                className="card"
+                style={{ width: "30%", marginBottom: "20px" }}
+                key={post.id}
+              >
+                <div className="card-body">
+                  <p>{`post id: ${post.id}`}</p>
+                  <p>{`post title: ${post.title}`}</p>
+                  <CommentList postId={post.id}></CommentList>
+                  <CommentCreate postId={post.id}></CommentCreate>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+      </div>
     </div>
   );
 };
