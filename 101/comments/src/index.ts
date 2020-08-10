@@ -2,19 +2,17 @@ import express, { Request, Response } from "express";
 import { randomBytes } from "crypto";
 import bodyparser from "body-parser";
 import cors from "cors";
+import axios from "axios";
+import { Comment, PostCommentEvent, PostPostEvent } from "../../shared/Types";
 const app = express();
 app.use(bodyparser.json());
 app.use(cors());
 
-interface comment {
-  id: string;
-  content: string;
-}
-const commentsByPostId: { [key: string]: comment[] } = {};
+const commentsByPostId: { [key: string]: Comment[] } = {};
 
 app.get(
   "/posts/:id/comments",
-  (req: Request<{ id: string }, {}, {}>, res: Response<comment[]>) => {
+  (req: Request<{ id: string }, {}, {}>, res: Response<Comment[]>) => {
     const comments = commentsByPostId[req.params.id] || [];
     return res.send(comments);
   }
@@ -22,17 +20,26 @@ app.get(
 
 app.post(
   "/posts/:id/comments",
-  (
+  async (
     req: Request<{ id: string }, {}, { content: string }>,
-    res: Response<comment[]>
+    res: Response<Comment[]>
   ) => {
     const commentId = randomBytes(4).toString("hex");
     const { content } = req.body;
     const comments = commentsByPostId[req.params.id] || [];
     comments.push({ id: commentId, content });
     commentsByPostId[req.params.id] = comments;
+    await axios.post("http://localhost:4005/events", {
+      type: "CommentCreated",
+      data: { id: commentId, content, postId: req.params.id },
+    });
     return res.status(201).send(comments);
   }
 );
-
+app.post(
+  "/events",
+  (req: Request<{}, {}, PostCommentEvent | PostPostEvent>, res) => {
+    console.log("Event received", req.body);
+  }
+);
 app.listen(2001, () => {});
