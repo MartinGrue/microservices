@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
+import CommentCreate from "./CommentCreate";
+import CommentList from "./CommentList";
 interface post {
   id: string;
   title: string;
@@ -13,7 +15,6 @@ const PostList = () => {
     const posts = await axios.get<any, AxiosResponse<Posts>>(
       "http://localhost:2002/posts"
     );
-
     return posts.data;
   };
   useEffect(() => {
@@ -22,7 +23,7 @@ const PostList = () => {
   const [postList, setpostList] = useState<Posts>({});
   return (
     <div className="container">
-      <h1>Post List</h1>
+      <h1>Posts</h1>
       {postList &&
         Object.values(postList).map((post) => {
           return (
@@ -32,9 +33,10 @@ const PostList = () => {
               key={post.id}
             >
               <div className="card-body">
-                {" "}
                 <p>{`post id: ${post.id}`}</p>
                 <p>{`post title: ${post.title}`}</p>
+                <CommentList postId={post.id}></CommentList>
+                <CommentCreate postId={post.id}></CommentCreate>
               </div>
             </div>
           );
