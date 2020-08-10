@@ -17,7 +17,7 @@ app.post(
   "/events",
   (req: Request<{}, {}, PostPostEvent | PostCommentEvent>, res) => {
     const event = req.body;
-    // axios.post("http://localhost:2000/events", event);
+    axios.post("http://localhost:4002/events", event);
     axios.post("http://localhost:2001/events", event);
     axios.post("http://localhost:2002/events", event);
     console.log("Event fired", event);
