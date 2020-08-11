@@ -18,6 +18,7 @@
     "typescript": "^3.9.7"
   },
   "scripts": {
+    "postinstall": "patch-package",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

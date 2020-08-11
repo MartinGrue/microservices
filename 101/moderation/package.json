@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "patch-package",
     "start": "node -r ts-node/register ./src/index.ts",
     "start:watch": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
