@@ -2,25 +2,22 @@ import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 import CommentCreate from "./CommentCreate";
 import CommentList from "./CommentList";
-interface post {
-  id: string;
-  title: string;
-}
-interface Posts {
-  [key: string]: post;
-}
+import { PostWithComments } from "../../shared/Types";
 
 const PostList = () => {
-  const fetchPosts = async (): Promise<Posts> => {
-    const posts = await axios.get<any, AxiosResponse<Posts>>(
-      "http://localhost:2002/posts"
-    );
+  const fetchPosts = async (): Promise<{ [key: string]: PostWithComments }> => {
+    const posts = await axios.get<
+      any,
+      AxiosResponse<{ [key: string]: PostWithComments }>
+    >("http://localhost:4002/posts");
     return posts.data;
   };
   useEffect(() => {
     fetchPosts().then((res) => setpostList(res));
   }, []);
-  const [postList, setpostList] = useState<Posts>({});
+  const [postList, setpostList] = useState<{ [key: string]: PostWithComments }>(
+    {}
+  );
   return (
     <div className="container">
       <h1>Posts</h1>
@@ -36,7 +33,7 @@ const PostList = () => {
                 <div className="card-body">
                   <p>{`post id: ${post.id}`}</p>
                   <p>{`post title: ${post.title}`}</p>
-                  <CommentList postId={post.id}></CommentList>
+                  <CommentList comments={post.comments}></CommentList>
                   <CommentCreate postId={post.id}></CommentCreate>
                 </div>
               </div>
