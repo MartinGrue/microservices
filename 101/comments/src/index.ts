@@ -8,9 +8,9 @@ import {
   PostCommentEvent,
   Event,
   CommentModerated,
-  CommentUpdated
-} from "../../shared/Types";
-import { isCommentModerated } from "../../shared/TypeGuards";
+  CommentUpdated,
+} from "sharedtypes/Types";
+import { isCommentModerated } from "sharedtypes/TypeGuards";
 const app = express();
 app.use(bodyparser.json());
 app.use(cors());
@@ -56,16 +56,13 @@ app.post("/events", async (req: Request<{}, {}, Event>, res) => {
     const { postId, id, status } = req.body.data;
     const comment = commentsByPostId[postId].find((c) => c.id === id);
     comment!.status = status;
-    await axios.post<any, any, CommentUpdated>(
-      "http://localhost:4005/events",
-      {
-        type: "CommentUpdated",
-        data: {
-          ...comment!,
-          postId,
-        },
-      }
-    );
+    await axios.post<any, any, CommentUpdated>("http://localhost:4005/events", {
+      type: "CommentUpdated",
+      data: {
+        ...comment!,
+        postId,
+      },
+    });
   }
   console.log("Event received", req.body);
 });

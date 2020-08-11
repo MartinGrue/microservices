@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 import CommentCreate from "./CommentCreate";
 import CommentList from "./CommentList";
-import { PostWithComments } from "../../shared/Types";
+import { PostWithComments } from "sharedtypes/Types";
 
 const PostList = () => {
   const fetchPosts = async (): Promise<{ [key: string]: PostWithComments }> => {

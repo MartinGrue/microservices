@@ -1,0 +1,8 @@
+FROM node:alpine
+WORKDIR /app/queryservice
+COPY /queryservice/package.json ./
+COPY ./shared /app/shared
+COPY /queryservice/ ./
+
+RUN npm install 
+CMD ["npm", "start"]

@@ -3,7 +3,7 @@ import { randomBytes } from "crypto";
 import bodyparser from "body-parser";
 import axios from "axios";
 import cors from "cors";
-import { Post, Event, PostPostEvent } from "../../shared/Types";
+import { Post, Event, PostPostEvent } from "sharedtypes/Types";
 
 const app = express();
 app.use(bodyparser.json());

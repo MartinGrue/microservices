@@ -1,5 +1,5 @@
 import React from "react";
-import { Comment } from "../../shared/Types";
+import { Comment } from "sharedtypes/Types"
 
 interface CommentListProps {
   comments: Comment[];

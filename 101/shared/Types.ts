@@ -28,8 +28,11 @@ export interface CommentUpdated {
   type: "CommentUpdated";
   data: CommentEventData;
 }
-export type Event = PostCommentEvent | PostPostEvent | CommentModerated | CommentUpdated;
+export type Event =
+  | PostCommentEvent
+  | PostPostEvent
+  | CommentModerated
+  | CommentUpdated;
 export interface CommentEventData extends Comment {
   postId: string;
 }
-// {"adsdad": {id:"adsdad", title:"1", comments: []}}

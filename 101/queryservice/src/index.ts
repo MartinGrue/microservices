@@ -1,12 +1,12 @@
 import express, { Request, Response } from "express";
 import bodyparser from "body-parser";
 import cors from "cors";
-import { Event, PostWithComments } from "../../shared/Types";
+import { Event, PostWithComments } from "sharedtypes/Types";
 import {
   isPostPostEvent,
   isPostCommentEvent,
   isCommentUpdated,
-} from "../../shared/TypeGuards";
+} from "sharedtypes/TypeGuards";
 import axios, { AxiosResponse } from "axios";
 const app = express();
 app.use(bodyparser.json());
@@ -50,10 +50,12 @@ app.post("/events", (req: Request<{}, {}, Event>, res) => {
 
 app.listen(4002, async () => {
   console.log("QueryServive is running on 4002");
-  const events = await axios.get<any, AxiosResponse<Event[]>>(
-    "http://localhsot:4005/events"
-  );
-  events.data.forEach((event) => {
-    handleEvent(event);
-  });
+  try {
+    const events = await axios.get<any, AxiosResponse<Event[]>>(
+      "http://localhsot:4005/events"
+    );
+    events.data.forEach((event) => {
+      handleEvent(event);
+    });
+  } catch (error) {}
 });

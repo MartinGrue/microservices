@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import bodyparser from "body-parser";
 import axios from "axios";
-import { Event, CommentModerated } from "../../shared/Types";
-import { isPostCommentEvent } from "../../shared/TypeGuards";
+import { Event, CommentModerated } from "sharedtypes/Types";
+import { isPostCommentEvent } from "sharedtypes/TypeGuards";
 
 const app = express();
 app.use(bodyparser.json());

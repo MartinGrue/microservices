@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import bodyparser from "body-parser";
 import axios from "axios";
-import { Event } from "../../shared/Types";
+import { Event } from "sharedtypes/Types"
 
 const app = express();
 const events: Event[] = [];
