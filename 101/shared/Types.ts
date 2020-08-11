@@ -1,7 +1,7 @@
 export interface Comment {
   id: string;
   content: string;
-  status: string
+  status: "pending" | "approved" | "rejected";
 }
 export interface Post {
   id: string;
@@ -14,13 +14,18 @@ export interface PostWithComments extends Post {
 
 export interface PostCommentEvent {
   type: "CommentCreated";
-  data: PostCommentEventData;
+  data: CommentEventData;
 }
 export interface PostPostEvent {
   type: "PostCreated";
   data: Post;
 }
-export interface PostCommentEventData extends Comment {
+export interface CommentModerated {
+  type: "CommentModerated";
+  data: CommentEventData;
+}
+export type Event = PostCommentEvent | PostPostEvent | CommentModerated;
+export interface CommentEventData extends Comment {
   postId: string;
 }
 // {"adsdad": {id:"adsdad", title:"1", comments: []}}

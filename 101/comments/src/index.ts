@@ -2,8 +2,8 @@ import express, { Request, Response } from "express";
 import { randomBytes } from "crypto";
 import bodyparser from "body-parser";
 import cors from "cors";
-import axios, { AxiosInstance } from "../../shared/custom.typings";
-import { Comment, PostCommentEvent, PostPostEvent } from "../../shared/Types";
+import axios from "axios"
+import { Comment, PostCommentEvent, Event } from "../../shared/Types";
 const app = express();
 app.use(bodyparser.json());
 app.use(cors());
@@ -46,7 +46,7 @@ app.post(
 );
 app.post(
   "/events",
-  (req: Request<{}, {}, PostCommentEvent | PostPostEvent>, res) => {
+  (req: Request<{}, {}, Event>, res) => {
     console.log("Event received", req.body);
   }
 );

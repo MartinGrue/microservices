@@ -3,7 +3,7 @@ import { randomBytes } from "crypto";
 import bodyparser from "body-parser";
 import axios from "axios";
 import cors from "cors";
-import { Post, PostCommentEvent, PostPostEvent } from "../../shared/Types";
+import { Post, Event, PostPostEvent } from "../../shared/Types";
 
 const app = express();
 app.use(bodyparser.json());
@@ -27,16 +27,13 @@ app.post("/posts", async (req: Request<{}, {}, { title: string }>, res) => {
   const id = randomBytes(4).toString("hex");
   const { title } = req.body;
   posts[id] = { id, title };
-  await axios.post("http://localhost:4005/events", {
+  await axios.post<any, any, PostPostEvent>("http://localhost:4005/events", {
     type: "PostCreated",
-    data: { id, title } as Post,
+    data: { id, title },
   });
   return res.status(201).send(posts[id]);
 });
-app.post(
-  "/events",
-  (req: Request<{}, {}, PostCommentEvent | PostPostEvent>, res) => {
-    console.log("Event received", req.body);
-  }
-);
+app.post("/events", (req: Request<{}, {}, Event>, res) => {
+  console.log("Event received", req.body);
+});
 app.listen(2002, () => {});
