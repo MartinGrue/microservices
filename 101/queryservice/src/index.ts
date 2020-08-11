@@ -2,7 +2,11 @@ import express, { Request, Response } from "express";
 import bodyparser from "body-parser";
 import cors from "cors";
 import { Event, PostWithComments } from "../../shared/Types";
-import { isPostPostEvent, isPostCommentEvent } from "../../shared/TypeGuards";
+import {
+  isPostPostEvent,
+  isPostCommentEvent,
+  isCommentUpdated,
+} from "../../shared/TypeGuards";
 const app = express();
 app.use(bodyparser.json());
 app.use(cors());
@@ -29,6 +33,13 @@ app.post("/events", (req: Request<{}, {}, Event>, res) => {
     const { id, content, status, postId } = req.body.data;
     posts[postId].comments.push({ id, content, status });
     console.log("new Comment");
+  }
+  if (isCommentUpdated(req.body)) {
+    const { id, content, status, postId } = req.body.data;
+    const comment = posts[postId].comments.find((c) => c.id === id);
+    comment!.status = status;
+    comment!.content = content;
+    console.log("Comment updated");
   }
   console.log(posts);
   res.send({});

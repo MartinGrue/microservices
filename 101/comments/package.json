@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {w
+  "scripts": {
     "postinstall": "patch-package",
     "start": "node -r ts-node/register ./src/index.ts",
     "start:watch": "nodemon",

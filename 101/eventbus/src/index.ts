@@ -11,9 +11,11 @@ app.post("/events", (req: Request<{}, {}, Event>, res) => {
   axios.post<any, any, Event>("http://localhost:4002/events", event);
   axios.post<any, any, Event>("http://localhost:2001/events", event);
   axios.post<any, any, Event>("http://localhost:2002/events", event);
+  axios.post<any, any, Event>("http://localhost:2003/events", event);
+
   console.log("Event fired", event);
   res.send({ status: "OK" });
 });
 app.listen(4005, () => {
-  console.log("bus listening on 4005");
+  console.log("bus running on 4005");
 });

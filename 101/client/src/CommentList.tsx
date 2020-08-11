@@ -11,11 +11,20 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
       <h1>Comment List</h1>
       <ul>
         {comments.map((comment) => {
+          const content =
+            comment.status === "approved"
+              ? comment.content
+              : comment.status === "pending"
+              ? "Your content is beeing moderated please wait"
+              : comment.status === "rejected"
+              ? "Your content has been rejected"
+              : null;
+
           return (
             <div key={comment.id}>
               <hr></hr>
               <li>{comment.id}</li>
-              <li>{comment.content}</li>
+              <li>{content}</li>
             </div>
           );
         })}

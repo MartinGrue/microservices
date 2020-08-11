@@ -36,4 +36,6 @@ app.post("/posts", async (req: Request<{}, {}, { title: string }>, res) => {
 app.post("/events", (req: Request<{}, {}, Event>, res) => {
   console.log("Event received", req.body);
 });
-app.listen(2002, () => {});
+app.listen(2002, () => {
+  console.log("Posts Service running on 2002");
+});

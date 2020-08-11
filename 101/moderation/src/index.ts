@@ -26,7 +26,9 @@ app.post("/events", async (req: Request<{}, {}, Event>, res: Response<{}>) => {
       }
     );
   }
-  return res.send();
+  console.log("Event received", req.body);
 });
 
-app.listen(2003, () => {});
+app.listen(2003, () => {
+  console.log("Moderation Service running on 2003");
+});

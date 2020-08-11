@@ -2,8 +2,15 @@ import express, { Request, Response } from "express";
 import { randomBytes } from "crypto";
 import bodyparser from "body-parser";
 import cors from "cors";
-import axios from "axios"
-import { Comment, PostCommentEvent, Event } from "../../shared/Types";
+import axios from "axios";
+import {
+  Comment,
+  PostCommentEvent,
+  Event,
+  CommentModerated,
+  CommentUpdated
+} from "../../shared/Types";
+import { isCommentModerated } from "../../shared/TypeGuards";
 const app = express();
 app.use(bodyparser.json());
 app.use(cors());
@@ -44,10 +51,24 @@ app.post(
     return res.status(201).send(comments);
   }
 );
-app.post(
-  "/events",
-  (req: Request<{}, {}, Event>, res) => {
-    console.log("Event received", req.body);
+app.post("/events", async (req: Request<{}, {}, Event>, res) => {
+  if (isCommentModerated(req.body)) {
+    const { postId, id, status } = req.body.data;
+    const comment = commentsByPostId[postId].find((c) => c.id === id);
+    comment!.status = status;
+    await axios.post<any, any, CommentUpdated>(
+      "http://localhost:4005/events",
+      {
+        type: "CommentUpdated",
+        data: {
+          ...comment!,
+          postId,
+        },
+      }
+    );
   }
-);
-app.listen(2001, () => {});
+  console.log("Event received", req.body);
+});
+app.listen(2001, () => {
+  console.log("Comments Service running on 2001");
+});
