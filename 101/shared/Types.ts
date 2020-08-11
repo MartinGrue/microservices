@@ -1,6 +1,7 @@
 export interface Comment {
   id: string;
   content: string;
+  status: string
 }
 export interface Post {
   id: string;

@@ -26,15 +26,14 @@ app.get(
 app.post(
   "/events",
   (req: Request<{}, {}, PostCommentEvent | PostPostEvent>, res) => {
-      
     if (isPostPostEvent(req.body)) {
       const { id, title } = req.body.data;
       posts[id] = { id, title, comments: [] };
       console.log("new Post");
     }
     if (isPostCommentEvent(req.body)) {
-      const { id, content, postId } = req.body.data;
-      posts[postId].comments.push({ id, content });
+      const { id, content, status, postId } = req.body.data;
+      posts[postId].comments.push({ id, content, status });
       console.log("new Comment");
     }
     console.log(posts);
