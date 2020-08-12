@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: msposts
+spec:
+  containers:
+    - name: msposts
+      image: localhost:5000/msposts
+  imagePullSecrets:
+    - name: regcred

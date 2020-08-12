@@ -6,12 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: posts
+      app: msposts
   template:
     metadata:
       labels:
-        app: posts
+        app: msposts
     spec:
       containers:
-        - name: posts
-          image: posts
+        - name: msposts
+          image: localhost:5000/msposts
+      imagePullSecrets:
+        - name: regcred

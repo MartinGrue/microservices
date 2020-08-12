@@ -1,3 +1,3 @@
 #!/bin/bash
 ln -fs .dockerignore.comments .dockerignore
-docker build -f Dockerfile.comments -t mscomments .
+docker build -f Dockerfile.comments -t localhost:5000/mscomments .
