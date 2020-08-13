@@ -37,7 +37,7 @@ app.post(
     comments.push({ id: commentId, content, status: "pending" });
     commentsByPostId[req.params.id] = comments;
     await axios.post<any, any, PostCommentEvent>(
-      "http://localhost:4005/events",
+      "http://eventbus-srv:4005/events",
       {
         type: "CommentCreated",
         data: {
@@ -56,13 +56,16 @@ app.post("/events", async (req: Request<{}, {}, Event>, res) => {
     const { postId, id, status } = req.body.data;
     const comment = commentsByPostId[postId].find((c) => c.id === id);
     comment!.status = status;
-    await axios.post<any, any, CommentUpdated>("http://localhost:4005/events", {
-      type: "CommentUpdated",
-      data: {
-        ...comment!,
-        postId,
-      },
-    });
+    await axios.post<any, any, CommentUpdated>(
+      "http://eventbus-srv:4005/events",
+      {
+        type: "CommentUpdated",
+        data: {
+          ...comment!,
+          postId,
+        },
+      }
+    );
   }
   console.log("Event received", req.body);
 });

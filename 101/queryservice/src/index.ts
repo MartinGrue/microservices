@@ -52,7 +52,7 @@ app.listen(4002, async () => {
   console.log("QueryServive is running on 4002");
   try {
     const events = await axios.get<any, AxiosResponse<Event[]>>(
-      "http://localhsot:4005/events"
+      "http://eventbus-srv:4005/events"
     );
     events.data.forEach((event) => {
       handleEvent(event);
