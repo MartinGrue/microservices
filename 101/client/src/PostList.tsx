@@ -9,7 +9,7 @@ const PostList = () => {
     const posts = await axios.get<
       any,
       AxiosResponse<{ [key: string]: PostWithComments }>
-    >("http://posts.com:4002/posts");
+    >("http://posts.com/posts");
     return posts.data;
   };
   useEffect(() => {
