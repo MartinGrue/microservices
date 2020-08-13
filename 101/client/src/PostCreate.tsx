@@ -5,7 +5,7 @@ export default () => {
   const [title, settitle] = useState("");
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await axios.post("http://localhost:2002/posts", { title });
+    await axios.post("http://posts.com:2002/posts", { title });
     settitle("");
   };
   return (

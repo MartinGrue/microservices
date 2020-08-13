@@ -1,0 +1,8 @@
+FROM node:alpine
+WORKDIR /app/client
+COPY /client/package.json ./
+COPY ./shared /app/shared
+COPY /client/ ./
+
+RUN npm install 
+CMD ["npm", "start"]
