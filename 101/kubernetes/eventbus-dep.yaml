@@ -1,32 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts-dep
+  name: eventbus-dep
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: msposts
+      app: eventbus
   template:
     metadata:
       labels:
-        app: msposts
+        app: eventbus
     spec:
       containers:
-        - name: msposts
-          image: localhost:5000/msposts
+        - name: eventbus
+          image: localhost:5000/mseventbus
       imagePullSecrets:
         - name: regcred
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-clusterip-srv
+  name: eventbus-srv
 spec:
   selector:
-    app: msposts
+    app: eventbus
   ports:
     - name: msposts
       protocol: TCP
-      port: 2002
-      targetPort: 2002
+      port: 4005
+      targetPort: 4005

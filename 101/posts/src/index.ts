@@ -27,7 +27,7 @@ app.post("/posts", async (req: Request<{}, {}, { title: string }>, res) => {
   const id = randomBytes(4).toString("hex");
   const { title } = req.body;
   posts[id] = { id, title };
-  await axios.post<any, any, PostPostEvent>("http://localhost:4005/events", {
+  await axios.post<any, any, PostPostEvent>("http://eventbus-srv:4005/events", {
     type: "PostCreated",
     data: { id, title },
   });
