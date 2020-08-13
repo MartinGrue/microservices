@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: eventbus
-          image: localhost:5000/mseventbus
+          image: eventbus
       imagePullSecrets:
         - name: regcred
 ---

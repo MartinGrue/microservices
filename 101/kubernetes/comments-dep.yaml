@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: comments
-          image: localhost:5000/mscomments
+          image: comments
       imagePullSecrets:
         - name: regcred
 ---

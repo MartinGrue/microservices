@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: moderation
-          image: localhost:5000/msmoderation
+          image: moderation
       imagePullSecrets:
         - name: regcred
 ---
