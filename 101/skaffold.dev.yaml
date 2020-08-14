@@ -24,20 +24,14 @@ build:
       context: .
       custom:
         buildCommand: ./build_queryservice.sh
-        dependencies:
-          paths:
-            - "/queryservice/*"
       sync:
         manual:
-          - src: "queryservice/src/*"
+          - src: "queryservice/src/**/*.ts"
             dest: .
     - image: posts
       context: .
       custom:
         buildCommand: ./build_posts.sh
-        dependencies:
-          paths:
-            - "/posts/*"
       sync:
         manual:
           - src: 'posts/src/**/*.ts'
