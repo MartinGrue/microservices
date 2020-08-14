@@ -22,7 +22,7 @@ build:
         buildCommand: ./build_comments.sh
     - image: moderation
       custom:
-        buildCommand: ./build_moderation.sh       
+        buildCommand: ./build_moderation.sh
     - image: eventbus
       custom:
         buildCommand: ./build_eventbus.sh

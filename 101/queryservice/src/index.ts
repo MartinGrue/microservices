@@ -40,7 +40,7 @@ const handleEvent = (event: Event) => {
     const comment = posts[postId].comments.find((c) => c.id === id);
     comment!.status = status;
     comment!.content = content;
-    console.log("Comment updated");
+    console.log("Comment updated eeeweiji243234j243gzgjjr");
   }
 };
 app.post("/events", (req: Request<{}, {}, Event>, res) => {

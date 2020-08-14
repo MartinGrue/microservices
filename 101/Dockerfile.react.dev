@@ -1,0 +1,10 @@
+FROM node:13.12.0-alpine
+WORKDIR /app/client
+COPY --chown=node:node /client/package.json ./
+COPY --chown=node:node ./shared /app/shared
+COPY --chown=node:node /client/ ./
+
+RUN npm install 
+RUN npm install react-scripts -g
+
+CMD ["npm", "start"]
