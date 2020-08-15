@@ -4,7 +4,7 @@ import { currentUserRouter } from "./routes/currentuser";
 import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
-
+import { errorHandler } from "./middleware/error-handler";
 const app = express();
 
 app.use(json());
@@ -13,6 +13,7 @@ app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
 
+app.use(errorHandler);
 app.get("/api/users/currentuser", (req, res) => {
   res.send("hi there");
 });
