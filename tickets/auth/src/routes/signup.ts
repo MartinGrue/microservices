@@ -7,6 +7,8 @@ import {
   BadRequestError,
 } from "../errors/ErrorTypes";
 import { User } from "../models/User";
+import jsonwebtoken from "jsonwebtoken";
+
 const router = express.Router();
 
 router.post(
@@ -30,6 +32,12 @@ router.post(
     }
     const user = User.build({ email, password });
     await user.save();
+
+    const token = jsonwebtoken.sign(
+      { userId: user._id, email: user.email },
+      "Token_KEY_GOES_HERE"
+    );
+    req.session!["jwt"] = token;
     res.status(201).send(user);
   }
 );
