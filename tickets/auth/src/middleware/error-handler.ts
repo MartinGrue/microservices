@@ -8,7 +8,7 @@ export const errorHandler = (
   next: NextFunction
 ) => {
   if (err instanceof CustomError) {
-    console.log("got custom error type");
+    console.log("got custom error type:", err.message);
     return res.status(err.statusCode).send(err.formatErrorForClient());
   }
 

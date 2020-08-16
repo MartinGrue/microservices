@@ -3,7 +3,7 @@ export abstract class CustomError extends Error {
   abstract statusCode: number;
   abstract formatErrorForClient(): ClientError;
   constructor(msg: string) {
-    super();
+    super(msg);
     Object.setPrototypeOf(this, CustomError.prototype);
   }
 }
@@ -36,4 +36,14 @@ export class DataBaseConnectionError extends CustomError {
 }
 export interface ClientError {
   errors: { message: string; field?: string }[];
+}
+export class BadRequestError extends CustomError {
+  statusCode = 404;
+  constructor(public msg: string) {
+    super(msg);
+    Object.setPrototypeOf(this, BadRequestError.prototype);
+  }
+  formatErrorForClient(): ClientError {
+    return { errors: [{ message: this.msg }] };
+  }
 }

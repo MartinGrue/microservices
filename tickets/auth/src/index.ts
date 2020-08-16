@@ -5,6 +5,8 @@ import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
 import { errorHandler } from "./middleware/error-handler";
+import mongoose from "mongoose";
+
 const app = express();
 
 app.use(json());
@@ -17,6 +19,19 @@ app.use(errorHandler);
 app.get("/api/users/currentuser", (req, res) => {
   res.send("hi there");
 });
-app.listen(4000, () => {
-  console.log("auth listening on 4000");
-});
+const start = async () => {
+  try {
+    await mongoose.connect("mongodb://auth-mongo-srv:27017/auth", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    });
+    console.log("Connected to mongodb");
+  } catch (error) {
+    console.log(error);
+  }
+  app.listen(4000, () => {
+    console.log("auth listening on 4000");
+  });
+};
+start();
