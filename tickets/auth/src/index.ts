@@ -9,6 +9,8 @@ import mongoose from "mongoose";
 import cookieSession from "cookie-session";
 
 const app = express();
+app.use(errorHandler);
+
 app.set("trust proxy", true);
 app.use(json());
 app.use(cookieSession({ signed: false, secure: false }));
@@ -17,7 +19,6 @@ app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
 
-app.use(errorHandler);
 app.get("/api/users/currentuser", (req, res) => {
   res.send("hi there");
 });
