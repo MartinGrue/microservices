@@ -35,7 +35,7 @@ router.post(
 
     const token = jsonwebtoken.sign(
       { userId: user._id, email: user.email },
-      "Token_KEY_GOES_HERE"
+      process.env.JWT_KEY!
     );
     req.session!["jwt"] = token;
     res.status(201).send(user);
