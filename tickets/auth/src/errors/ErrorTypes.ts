@@ -10,8 +10,11 @@ export abstract class CustomError extends Error {
 
 export class RequestValidationError extends CustomError {
   statusCode = 400;
-  constructor(public errors: ValidationError[]) {
-    super("RequestValidationError");
+  constructor(
+    public errors: ValidationError[] = [],
+    public msg: string = "RequestValidationError"
+  ) {
+    super(msg);
     Object.setPrototypeOf(this, RequestValidationError.prototype);
   }
   formatErrorForClient(): ClientError {

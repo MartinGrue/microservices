@@ -6,7 +6,14 @@
   "scripts": {
     "start:watch": "nodemon",
     "start": "ts-node-dev src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchAll --no-cache"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -39,5 +46,13 @@
     ],
     "exec": "npm start",
     "ext": "ts"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/supertest": "^2.0.10",
+    "jest": "^26.4.0",
+    "mongodb-memory-server": "^6.6.4",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.2.0"
   }
 }

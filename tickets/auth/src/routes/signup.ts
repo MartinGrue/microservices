@@ -1,7 +1,7 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
 import { body } from "express-validator";
-import { BadRequestError } from "../errors/ErrorTypes";
+import { BadRequestError, RequestValidationError } from "../errors/ErrorTypes";
 import { User } from "../models/User";
 import jsonwebtoken from "jsonwebtoken";
 import { validateRequest } from "../middleware/validate-request";
@@ -14,11 +14,11 @@ router.post(
     body("email").isEmail().withMessage("Email must be valid"),
     body("password")
       .trim()
-      .isLength({ min: 4, max: 20 })
-      .withMessage("password must be between 4 and 20 characters"),
+      .isLength({ min: 4, max: 10 })
+      .withMessage("password must be between 4 and 10 characters"),
   ],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;
       const userFromDB = await User.findOne({ email });
@@ -32,10 +32,11 @@ router.post(
         { userId: user.id, email: user.email },
         process.env.JWT_KEY!
       );
+      // set cookie on http header: Set-Cookie
       req.session!["jwt"] = token;
       res.status(201).send(user);
     } catch (error) {
-      return res.status(422).send(error.massage);
+      next(error);
     }
   }
 );

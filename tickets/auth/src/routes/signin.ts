@@ -33,6 +33,7 @@ router.post(
         { userId: userFromDB.id, email: userFromDB.email },
         process.env.JWT_KEY!
       );
+      // set cookie on http header: Set-Cookie
       req.session!["jwt"] = token;
       res.status(200).send(userFromDB);
     } catch (error) {next(error)}
