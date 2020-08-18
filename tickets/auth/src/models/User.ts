@@ -22,6 +22,9 @@ const userSchema: Schema<UserDocument> = new mongoose.Schema(
     },
   }
 );
+export interface ICurrentUser {
+  currentUser: { email: string; id: string } | null;
+}
 interface IUser {
   email: string;
   password: string;

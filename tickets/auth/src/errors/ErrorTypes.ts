@@ -47,3 +47,15 @@ export class BadRequestError extends CustomError {
     return { errors: [{ message: this.msg }] };
   }
 }
+
+export class NotAuthorizedError extends CustomError {
+  statusCode = 401;
+  msg = "Not authorized";
+  constructor() {
+    super("NotAuthorizedError");
+    Object.setPrototypeOf(this, NotAuthorizedError.prototype);
+  }
+  formatErrorForClient(): ClientError {
+    return { errors: [{ message: this.msg }] };
+  }
+}

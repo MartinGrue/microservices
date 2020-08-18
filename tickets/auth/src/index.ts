@@ -7,9 +7,7 @@ import { signupRouter } from "./routes/signup";
 import { errorHandler } from "./middleware/error-handler";
 import mongoose from "mongoose";
 import cookieSession from "cookie-session";
-
 const app = express();
-app.use(errorHandler);
 
 app.set("trust proxy", true);
 app.use(json());
@@ -18,10 +16,8 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
+app.use(errorHandler);
 
-app.get("/api/users/currentuser", (req, res) => {
-  res.send("hi there");
-});
 const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error("JWT_KEY is not defined");

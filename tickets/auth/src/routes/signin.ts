@@ -5,7 +5,6 @@ import { User } from "../models/User";
 import { BadRequestError } from "../errors/ErrorTypes";
 import { Password } from "../utils/Password";
 import jsonwebtoken from "jsonwebtoken";
-import { errorHandler } from "../middleware/error-handler";
 
 const router = express.Router();
 
