@@ -8,60 +8,87 @@ const noPassword = "";
 const validPassword = "1234";
 const invalidPassword_toSmall = "012";
 const invalidPassword_toBig = "01234567890";
-it("returns a 201 on successful signup", async () => {
-  return request(app)
-    .post("/api/users/signup")
-    .send({ email: validEmail, password: validPassword })
-    .expect(201);
-});
 
-it("returns a 400 if no email is supplied", async () => {
-  return request(app)
-    .post("/api/users/signup")
-    .send({ email: noEmail, password: validPassword })
-    .expect(400);
-});
-
-it("returns a 400 if no email of type email is supplied", async () => {
-  return request(app)
-    .post("/api/users/signup")
-    .send({ email: inValidEmail, password: validPassword })
-    .expect(400);
-});
-it("returns a 400 if no password is supplied", async () => {
-  return request(app)
-    .post("/api/users/signup")
-    .send({ email: validEmail, password: noPassword })
-    .expect(400);
-});
-it("returns a 400 if password is smaller than 4 char", async () => {
-  return request(app)
-    .post("/api/users/signup")
-    .send({ email: validEmail, password: invalidPassword_toSmall })
-    .expect(400);
-});
-it("returns a 400 if password is bigger than 10 char", async () => {
-  return request(app)
-    .post("/api/users/signup")
-    .send({ email: validEmail, password: invalidPassword_toBig })
-    .expect(400);
-});
-it("returns a 404 if email already exists", async () => {
+it("returns a 201 on successful signin", async () => {
   await request(app)
     .post("/api/users/signup")
     .send({ email: validEmail, password: validPassword })
     .expect(201);
   return request(app)
-    .post("/api/users/signup")
+    .post("/api/users/signin")
     .send({ email: validEmail, password: validPassword })
-    .expect(404);
+    .expect(200);
 });
-it("set a cookie on successful signup", async () => {
-  //this will onyl pass if cookieSession({secure:false}); supertest uses http no https
-  const res = await request(app)
+
+it("returns a 400 if no email is supplied", async () => {
+  await request(app)
     .post("/api/users/signup")
     .send({ email: validEmail, password: validPassword })
     .expect(201);
+  return request(app)
+    .post("/api/users/signin")
+    .send({ email: noEmail, password: validPassword })
+    .expect(400);
+});
+
+it("returns a 400 if no email of type email is supplied", async () => {
+  await request(app)
+    .post("/api/users/signup")
+    .send({ email: validEmail, password: validPassword })
+    .expect(201);
+  return request(app)
+    .post("/api/users/signin")
+    .send({ email: inValidEmail, password: validPassword })
+    .expect(400);
+});
+it("returns a 400 if no password is supplied", async () => {
+  await request(app)
+    .post("/api/users/signup")
+    .send({ email: validEmail, password: validPassword })
+    .expect(201);
+  return request(app)
+    .post("/api/users/signin")
+    .send({ email: validEmail, password: noPassword })
+    .expect(400);
+});
+it("returns a 404 if wrong password is supplied", async () => {
+  await request(app)
+    .post("/api/users/signup")
+    .send({ email: validEmail, password: validPassword })
+    .expect(201);
+  return request(app)
+    .post("/api/users/signin")
+    .send({ email: validEmail, password: validPassword.concat("0") })
+    .expect(404);
+});
+it("returns a 404 if wrong email is supplied", async () => {
+  await request(app)
+    .post("/api/users/signup")
+    .send({ email: validEmail, password: validPassword })
+    .expect(201);
+  return request(app)
+    .post("/api/users/signin")
+    .send({ email: "0".concat(validEmail), password: validPassword })
+    .expect(404);
+});
+it("returns a 404 if user does not exists", async () => {
+  return request(app)
+    .post("/api/users/signin")
+    .send({ email: validEmail, password: validPassword })
+    .expect(404);
+});
+
+it("set a cookie on successful signin", async () => {
+  //this will onyl pass if cookieSession({secure:false}); supertest uses http no https
+  await request(app)
+    .post("/api/users/signup")
+    .send({ email: validEmail, password: validPassword })
+    .expect(201);
+
+  const res = await request(app)
+    .post("/api/users/signin")
+    .send({ email: validEmail, password: validPassword })
+    .expect(200);
 
   expect(res.get("Set-Cookie")).toBeDefined();
 });
