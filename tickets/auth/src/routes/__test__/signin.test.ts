@@ -6,10 +6,8 @@ const inValidEmail = "1";
 const noEmail = "";
 const noPassword = "";
 const validPassword = "1234";
-const invalidPassword_toSmall = "012";
-const invalidPassword_toBig = "01234567890";
 
-it("returns a 201 on successful signin", async () => {
+it("returns a 200 on successful signin", async () => {
   await request(app)
     .post("/api/users/signup")
     .send({ email: validEmail, password: validPassword })
