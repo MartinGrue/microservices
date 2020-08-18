@@ -2,9 +2,6 @@ import request from "supertest";
 import app from "../../app";
 
 const validEmail = "test@test.com";
-const inValidEmail = "1";
-const noEmail = "";
-const noPassword = "";
 const validPassword = "1234";
 
 it("returns a 200 on successful singout", async () => {
