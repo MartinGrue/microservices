@@ -23,6 +23,8 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "src/**/*.ts"
+          - src: "pages/**/*.tsx"
+            dest: .
+          - src: "components/**/*.tsx"
             dest: .
       
