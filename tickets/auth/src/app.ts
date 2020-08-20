@@ -7,12 +7,10 @@ import { signupRouter } from "./routes/signup";
 import { errorHandler } from "./middleware/error-handler";
 import cookieSession from "cookie-session";
 const app = express();
-
+//process.env.NODE_ENV !== "test"
 app.set("trust proxy", true);
 app.use(json());
-app.use(
-  cookieSession({ signed: false, secure: process.env.NODE_ENV !== "test" })
-);
+app.use(cookieSession({ signed: false, secure: false }));
 app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
