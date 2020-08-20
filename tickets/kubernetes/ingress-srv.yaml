@@ -14,3 +14,8 @@ spec:
             backend:
               serviceName: auth-srv
               servicePort: 4000
+          - path: /?(.*)
+            backend:
+              serviceName: renderer-srv
+              servicePort: 3000
+  
