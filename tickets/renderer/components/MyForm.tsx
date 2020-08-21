@@ -2,7 +2,11 @@ import React, { Fragment, useState } from "react";
 import { AppProps } from "next/app";
 import axios from "axios";
 import Router from "next/router";
-function MyForm() {
+import mitt from "next/dist/next-server/lib/mitt";
+interface MyFormProps {
+  mode: "signin" | "signup";
+}
+const MyForm: React.FC<MyFormProps> = ({ mode }) => {
   const [email, emailsetstate] = useState("");
   const [password, passwordsetstate] = useState("");
   const [errors, seterrors] = useState<any[] | undefined>(undefined);
@@ -19,7 +23,7 @@ function MyForm() {
   const onSubmit = async (e: any) => {
     console.log("email: ", email, "password: ", password);
     try {
-      const response = await axios.post("/api/users/signup", {
+      const response = await axios.post(`/api/users/${mode}`, {
         email,
         password,
       });
@@ -76,12 +80,12 @@ function MyForm() {
             className="btn btn-primary"
             onClick={(e) => onSubmit(e)}
           >
-            Sign in
+            {mode === "signin" ? "Sign In" : "Sign Up"}
           </button>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default MyForm;

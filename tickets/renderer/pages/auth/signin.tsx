@@ -6,7 +6,7 @@ const signup = () => {
   return (
     <Fragment>
       <div className="container" style={{ marginTop: "5rem" }}>
-        <MyForm mode="signup"></MyForm>
+        <MyForm mode="signin"></MyForm>
       </div>
     </Fragment>
   );
