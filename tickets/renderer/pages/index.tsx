@@ -1,5 +1,5 @@
 import React from "react";
-import { NextPage, NextPageContext } from "next";
+import { NextPage, NextPageContext, NextComponentType } from "next";
 import axios from "axios";
 import Router from "next/router";
 import { createAxiosInstance, createAgent } from "../app/api/createCustomAxios";
@@ -10,7 +10,6 @@ interface Props {
 }
 
 const index: NextPage<Props> = ({ currentUser }) => {
-  console.log("response: ", currentUser);
 
   return (
     <div>
@@ -32,12 +31,13 @@ const index: NextPage<Props> = ({ currentUser }) => {
   );
 };
 index.getInitialProps = async ({ req }: NextPageContext): Promise<Props> => {
+  console.log("loading in index");
+
   const axiosInstance = createAxiosInstance(req);
   const agent = createAgent(axiosInstance);
   try {
     const currentUser = await agent.User.fetchCurrentUser();
 
-    console.log("response: ", currentUser);
     return { currentUser };
   } catch (error) {
     const currentUser = await Promise.resolve<ICurrentUser>({

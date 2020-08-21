@@ -1,7 +1,56 @@
 import "bootstrap/dist/css/bootstrap.css";
-import { AppProps } from "next/app";
+import { AppProps, AppContext } from "next/app";
+import { NextPage, NextPageContext } from "next";
+import { ICurrentUser } from "../app/models/User";
+import { createAxiosInstance, createAgent } from "../app/api/createCustomAxios";
+import App from "next/app";
+import {
+  AppType,
+  NextComponentType,
+  AppInitialProps,
+} from "next/dist/next-server/lib/utils";
+import Header from "../components/Header";
+interface InitProps {
+  currentUser: ICurrentUser;
+}
+interface MyProps extends AppProps {
+  currentUser: ICurrentUser;
+}
 
-const app = ({ Component, pageProps }: AppProps) => {
-  return <Component {...pageProps}></Component>;
+const MyApp: NextComponentType<AppContext, AppInitialProps, MyProps> = ({
+  Component,
+  pageProps,
+  currentUser,
+}) => {
+  // console.log("currentUser:", currentUser);
+  return (
+    <div>
+      <Header currentUser={currentUser}></Header>
+      <Component {...pageProps}></Component>
+    </div>
+  );
 };
-export default app;
+
+MyApp.getInitialProps = async (appContext: AppContext) => {
+  // calls page's `getInitialProps` and fills `appProps.pageProps`
+  const appProps = await App.getInitialProps(appContext);
+  const pageProps = appContext.Component.getInitialProps
+    ? await appContext.Component.getInitialProps(appContext.ctx)
+    : {};
+  appProps.pageProps = pageProps;
+  const axiosInstance = createAxiosInstance(appContext.ctx.req);
+  const agent = createAgent(axiosInstance);
+
+  //pass down agent to store creation
+  try {
+    const currentUser = await agent.User.fetchCurrentUser();
+    return { ...appProps, currentUser };
+  } catch (error) {
+    const currentUser = await Promise.resolve<ICurrentUser>({
+      currentUser: null,
+    });
+    return { ...appProps, currentUser };
+  }
+};
+
+export default MyApp;
