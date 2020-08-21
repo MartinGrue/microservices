@@ -2,7 +2,6 @@ import React, { Fragment, useState } from "react";
 import { AppProps } from "next/app";
 import axios from "axios";
 import Router from "next/router";
-import mitt from "next/dist/next-server/lib/mitt";
 interface MyFormProps {
   mode: "signin" | "signup";
 }
