@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: npm-registry-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: npm-registry
+  template:
+    metadata:
+      labels:
+        app: npm-registry
+    spec:
+      containers:
+        - name: npm-registry
+          image: verdaccio/verdaccio
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: npm-registry-srv
+spec:
+  selector:
+    app: npm-registry
+  ports:
+    - name: npm-registry
+      protocol: TCP
+      port: 4873
+      targetPort: 4873
