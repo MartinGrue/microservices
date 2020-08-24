@@ -1,7 +1,6 @@
 import { Response, Request, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-
 export interface ICurrentUser {
   currentUser: { email: string; id: string } | null;
 }

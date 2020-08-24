@@ -47,5 +47,4 @@ const User: IUserModel = model<UserDocument, IUserModel>("test", userSchema);
 User.build = (userAttributes: IUser) => {
   return new User(userAttributes);
 };
-const user = User.build({ email: "asdd", password: "wewe" });
 export { User };
