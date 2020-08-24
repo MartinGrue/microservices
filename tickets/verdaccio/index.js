@@ -1,3 +1,0 @@
-
-  pinapplesecretjuicy
-  formatprettylevelhttp

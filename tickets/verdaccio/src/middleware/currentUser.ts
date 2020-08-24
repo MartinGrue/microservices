@@ -1,7 +1,10 @@
 import { Response, Request, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { ICurrentUser } from "../models/User";
 
+
+export interface ICurrentUser {
+  currentUser: { email: string; id: string } | null;
+}
 declare global {
   namespace Express {
     interface Request {

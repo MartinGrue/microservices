@@ -1,10 +1,10 @@
 import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
 import { body } from "express-validator";
-import { BadRequestError, RequestValidationError } from "../errors/ErrorTypes";
+import { BadRequestError, RequestValidationError } from "@scope/common";
 import { User } from "../models/User";
 import jsonwebtoken from "jsonwebtoken";
-import { validateRequest } from "../middleware/validate-request";
+import { validateRequest } from "@scope/common";
 
 const router = express.Router();
 

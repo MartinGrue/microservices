@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction, } from "express";
 import { body } from "express-validator";
-import { validateRequest } from "../middleware/validate-request";
+import { validateRequest } from "@scope/common";
 import { User } from "../models/User";
-import { BadRequestError } from "../errors/ErrorTypes";
+import { BadRequestError } from "@scope/common";
 import { Password } from "../utils/Password";
 import jsonwebtoken from "jsonwebtoken";
 

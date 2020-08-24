@@ -11,6 +11,7 @@ export interface Agent {
 }
 export const createAxiosInstance = (req: IncomingMessage): AxiosInstance => {
   if (typeof window === "undefined") {
+    console.log("window is undefined")
     const axiosInstance = axios.create({
       baseURL:
         "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",

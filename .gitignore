@@ -1,4 +1,3 @@
 **/node_modules
 **/.next
-*/npmregistry/storage/*
-!*/npmregistry/storage/@myscope
+*/verdaccio/build

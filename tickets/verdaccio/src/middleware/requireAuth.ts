@@ -1,8 +1,5 @@
 import { Response, Request, NextFunction } from "express";
-import {
-  NotAuthorizedError,
-} from "../errors/ErrorTypes";
-
+import { NotAuthorizedError } from "../errors/ErrorTypes";
 export const requireAuth = async (
   req: Request,
   res: Response,

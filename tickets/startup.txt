@@ -1,0 +1,18 @@
+compose networking between minikube and verdaccio
+ -  create network
+ -  start minikube
+ -  connect minikube container to the network
+ -  start verdaccio
+ -  connect verdaccio to the network
+ 
+add npm user to host of minikube to allow publishing npm packages to verdaccio (or modify the verdaccio config)
+start minikube with docker driver
+
+configure minikube:
+minikube addons enable ingress
+
+configure k8:
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.34.1/deploy/static/provider/cloud/deploy.yaml
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+
+configure /etc/host to point to the output of "minikube ip"

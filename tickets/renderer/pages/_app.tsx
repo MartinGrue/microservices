@@ -42,8 +42,11 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   const agent = createAgent(axiosInstance);
 
   //pass down agent to store creation
+  console.log("in app init")
   try {
     const currentUser = await agent.User.fetchCurrentUser();
+    console.log(currentUser.currentUser);
+
     return { ...appProps, currentUser };
   } catch (error) {
     const currentUser = await Promise.resolve<ICurrentUser>({

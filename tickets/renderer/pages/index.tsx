@@ -4,13 +4,12 @@ import axios from "axios";
 import Router from "next/router";
 import { createAxiosInstance, createAgent } from "../app/api/createCustomAxios";
 import { ICurrentUser } from "../app/models/User";
-
+import color from "@scope/common";
 interface Props {
   currentUser: ICurrentUser;
 }
 
 const index: NextPage<Props> = ({ currentUser }) => {
-
   return (
     <div>
       {currentUser.currentUser ? (
@@ -31,13 +30,13 @@ const index: NextPage<Props> = ({ currentUser }) => {
   );
 };
 index.getInitialProps = async ({ req }: NextPageContext): Promise<Props> => {
-  console.log("loading in index");
+  console.log("this is color form common module in index page: ", color);
 
   const axiosInstance = createAxiosInstance(req);
   const agent = createAgent(axiosInstance);
   try {
     const currentUser = await agent.User.fetchCurrentUser();
-
+    console.log(currentUser);
     return { currentUser };
   } catch (error) {
     const currentUser = await Promise.resolve<ICurrentUser>({
