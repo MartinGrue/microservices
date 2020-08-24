@@ -31,5 +31,5 @@ build:
         buildCommand: ./buildtickets.sh
       sync:
         manual:
-          - src: "**/*.tsx"
+          - src: "src/**/*.tsx"
             dest: .

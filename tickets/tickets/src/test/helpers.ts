@@ -1,14 +1,14 @@
 import request from "supertest";
 import app from "../app";
+import jsonwebtoken from "jsonwebtoken";
+export const getAuthCookie = (): string[] => {
+  process.env.JWT_KEY = "Token_KEY_GOES_HERE";
+  const userId = "13213123123";
+  const email = "test@test.com";
 
-export const getAuthCookie = async (): Promise<string[]> => {
-  const validEmail = "test@test.com";
-  const validPassword = "1234";
-
-  const authResponse = await request(app)
-    .post("/api/users/signup")
-    .send({ email: validEmail, password: validPassword })
-    .expect(201);
-  const cookie = authResponse.get("Set-Cookie");
-  return cookie;
+  const token = jsonwebtoken.sign({ userId, email }, process.env.JWT_KEY!);
+  const session = { jwt: token };
+  const sessionJSON = JSON.stringify(session);
+  const base64 = Buffer.from(sessionJSON).toString("base64");
+  return [`express:sess=${base64}`];
 };
