@@ -11,5 +11,6 @@ export const errorHandler = (
     console.log("got custom error type:", err.message);
     return res.status(err.statusCode).send(err.formatErrorForClient());
   }
+  console.log(err);
   return res.status(400).send({ errors: [{ message: err.message }] });
 };

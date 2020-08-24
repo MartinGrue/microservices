@@ -62,9 +62,12 @@ it("creates an ticket if input is correct", async () => {
     .set("Cookie", getAuthCookie())
     .send({ title: validTitle, price: validPrice });
 
+  console.log("new ticket res body: ", response.body);
+
   const tickets = await Ticket.find({});
   expect(tickets.length).toEqual(1);
   expect(tickets[0].title).toEqual(validTitle);
 
   expect(response.status).toEqual(201);
+  expect(response.body.id).toEqual(tickets[0].id)
 });

@@ -12,7 +12,7 @@ declare global {
   }
 }
 type Payload = { email: string; id: string };
-export const currentUser = (
+export const currentUser = async (
   req: Request,
   res: Response,
   next: NextFunction
