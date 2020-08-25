@@ -5,7 +5,7 @@ import { Ticket } from "../models/Ticket";
 
 const router = express.Router();
 router.get(
-  "/api/ticket/:id",
+  "/api/tickets/:id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       console.log(req.params.id);

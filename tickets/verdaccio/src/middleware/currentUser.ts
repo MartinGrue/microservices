@@ -1,8 +1,10 @@
 import { Response, Request, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+type Payload = { email: string; userId: string };
+
 export interface ICurrentUser {
-  currentUser: { email: string; id: string } | null;
+  currentUser: Payload | null;
 }
 declare global {
   namespace Express {
@@ -11,7 +13,6 @@ declare global {
     }
   }
 }
-type Payload = { email: string; id: string };
 export const currentUser = async (
   req: Request,
   res: Response,
