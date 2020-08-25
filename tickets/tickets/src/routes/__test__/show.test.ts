@@ -7,9 +7,9 @@ const validTitle = "1234";
 const validPrice = "10";
 const validTicketId = mongoose.Types.ObjectId().toHexString();
 const invalidTicketId = "1231313";
-
 const notexistingTicketId = validTicketId;
-it("returns 400 if the ticket is valid", async () => {
+
+it("returns 400 if the ticket is invalid", async () => {
   const response = await request(app)
     .get(`/api/ticket/${invalidTicketId}`)
     .send();
@@ -18,7 +18,7 @@ it("returns 400 if the ticket is valid", async () => {
 it("returns 404 if the ticket is not found", async () => {
   const response = await request(app)
     .get(`/api/ticket/${notexistingTicketId}`)
-    .send();
+    .send({ title: validTitle.concat("0") });
   expect(response.status).toEqual(404);
 });
 it("returns the ticket if the ticket is found", async () => {

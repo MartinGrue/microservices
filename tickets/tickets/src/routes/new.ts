@@ -12,7 +12,7 @@ router.post(
 
   [
     body("title").not().isEmpty().withMessage("Title is required"),
-    body("price").not().isEmpty().withMessage("Title is required"),
+    body("price").not().isEmpty().withMessage("price is required"),
   ],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {

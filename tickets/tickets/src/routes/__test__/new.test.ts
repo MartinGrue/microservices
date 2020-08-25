@@ -33,7 +33,7 @@ it("returns an error if no title is provided", async () => {
   expect(response.status).toEqual(400);
 });
 
-it("returns an error if a invalid title is provided", async () => {
+it("returns an 400 error if a invalid title is provided", async () => {
   const response = await request(app)
     .post("/api/tickets")
     .set("Cookie", getAuthCookie())
@@ -61,8 +61,6 @@ it("creates an ticket if input is correct", async () => {
     .post("/api/tickets")
     .set("Cookie", getAuthCookie())
     .send({ title: validTitle, price: validPrice });
-
-  console.log("new ticket res body: ", response.body);
 
   const tickets = await Ticket.find({});
   expect(tickets.length).toEqual(1);
