@@ -9,7 +9,6 @@ export abstract class Listener<T extends Event> {
   protected client: Stan;
   protected ackWait = 5 * 1000;
   abstract queueGroupName: string;
-
   constructor(client: Stan) {
     this.client = client;
   }
@@ -40,17 +39,4 @@ export abstract class Listener<T extends Event> {
       ? JSON.parse(data)
       : JSON.parse(data.toString("utf8"));
   }
-}
-class ConcreteListener extends Listener<TicketCreatedEvent> {
-  onMessage(data: TicketCreatedEvent["data"], msg: Message) {
-    console.log("Event data!", data);
-
-    console.log(data.id);
-    console.log(data.title);
-    console.log(data.price);
-
-    msg.ack();
-  }
-  queueGroupName = "test";
-  subject: Subjects.TicketCreated = Subjects.TicketCreated;
 }
