@@ -1,4 +1,7 @@
 import { ValidationError } from "express-validator";
+export interface ClientError {
+  errors: { message: string; field?: string }[];
+}
 export abstract class CustomError extends Error {
   abstract statusCode: number;
   abstract formatErrorForClient(): ClientError;
@@ -8,13 +11,14 @@ export abstract class CustomError extends Error {
   }
 }
 
+
 export class RequestValidationError extends CustomError {
   statusCode = 400;
   constructor(
     public errors: ValidationError[] = [],
-    public msg: string = "RequestValidationError"
+    public message: string = "RequestValidationError"
   ) {
-    super(msg);
+    super(message);
     Object.setPrototypeOf(this, RequestValidationError.prototype);
   }
   formatErrorForClient(): ClientError {
@@ -37,9 +41,7 @@ export class DataBaseConnectionError extends CustomError {
     return { errors: [{ message: this.reason }] };
   }
 }
-export interface ClientError {
-  errors: { message: string; field?: string }[];
-}
+
 export class BadRequestError extends CustomError {
   statusCode = 404;
   constructor(public msg: string) {

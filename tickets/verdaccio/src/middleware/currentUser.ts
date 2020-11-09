@@ -20,7 +20,6 @@ export const currentUser = async (
 ) => {
   if (!req.session?.jwt) {
     req.currentUser = { currentUser: null };
-
     return next();
   }
   try {
