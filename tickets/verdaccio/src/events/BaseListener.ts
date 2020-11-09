@@ -4,6 +4,7 @@ import { Subjects } from "./Subjects";
 
 export abstract class Listener<T extends Event> {
   abstract subject: T["subject"];
+
   abstract onMessage(data: T["data"], msg: Message): void;
 
   protected client: Stan;
