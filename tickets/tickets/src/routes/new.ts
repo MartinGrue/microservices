@@ -3,6 +3,7 @@ import { requireAuth, validateRequest, currentUser } from "@scope/common";
 import { body } from "express-validator";
 import { Ticket } from "../models/Ticket";
 import mongoose from "mongoose";
+import CreateTicketPublisher from "@scope/common/build/events/CreateTicketPublisher";
 
 const validTicketId = mongoose.Types.ObjectId().toHexString();
 
@@ -29,6 +30,13 @@ router.post(
         userId: req.currentUser!.currentUser!.userId,
       });
       await ticket.save();
+      // new CreateTicketPublisher(natsConnector.client).publish({
+      //   id: ticket.id,
+      //   title: ticket.title,
+      //   price: ticket.price,
+      //   userId: ticket.userId,
+      //   version: ticket.version,
+      // });
       return res.status(201).send(ticket);
     } catch (error) {
       next(error);

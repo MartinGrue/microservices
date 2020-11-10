@@ -1,4 +1,14 @@
 import mongoose, { Schema, Document, Model, model } from "mongoose";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
+
+interface ITicket {
+  title: string;
+  price: number;
+  userId: string;
+}
+interface TicketDocument extends Document, ITicket {
+  version: number;
+}
 const ticketSchema: Schema<TicketDocument> = new mongoose.Schema(
   {
     title: {
@@ -6,7 +16,7 @@ const ticketSchema: Schema<TicketDocument> = new mongoose.Schema(
       required: true,
     },
     price: {
-      type: String,
+      type: Number,
       required: true,
     },
     userId: {
@@ -25,13 +35,8 @@ const ticketSchema: Schema<TicketDocument> = new mongoose.Schema(
     },
   }
 );
-
-interface ITicket {
-  title: string;
-  price: string;
-  userId: string;
-}
-interface TicketDocument extends Document, ITicket {}
+ticketSchema.set("versionKey", "version");
+ticketSchema.plugin(updateIfCurrentPlugin);
 
 interface TicketModel extends Model<TicketDocument> {
   build(ticket: ITicket): TicketDocument;
