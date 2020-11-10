@@ -1,11 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
-import { requireAuth, validateRequest, currentUser } from "@scope/common";
+import { requireAuth, validateRequest, currentUser, CreateTicketPublisher } from "@scope/common";
 import { body } from "express-validator";
 import { Ticket } from "../models/Ticket";
-import mongoose from "mongoose";
-import CreateTicketPublisher from "@scope/common/build/events/CreateTicketPublisher";
 import { natsWrapper } from "../NatsWrapper";
-const validTicketId = mongoose.Types.ObjectId().toHexString();
 
 const router = express.Router();
 

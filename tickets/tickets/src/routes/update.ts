@@ -5,10 +5,10 @@ import {
   BadRequestError,
   currentUser,
   NotAuthorizedError,
+  UpdateTicketPublisher,
 } from "@scope/common";
 import { body } from "express-validator";
 import { Ticket } from "../models/Ticket";
-import UpdateTicketPublisher from "@scope/common/build/events/UpdateTicketPublisher";
 import { natsWrapper } from "../NatsWrapper";
 const router = express.Router();
 router.put(

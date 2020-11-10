@@ -43,7 +43,7 @@ export interface OrderCreatedEvent extends Event {
     status: OrderStatus;
     userId: string;
     expiresAt: string;
-    ticket: { id: string; price: string };
+    ticket: { id: string; price: number };
   };
 }
 export interface OrderCancelledEvent extends Event {

@@ -5,7 +5,7 @@ import { TicketDocument } from "./Ticket";
 interface IOrder {
   userId: string;
   status: string;
-  expiresAt: string;
+  expiresAt: Date;
   ticket: TicketDocument;
 }
 interface OrderDocument extends Document, IOrder {
@@ -22,7 +22,7 @@ const orderSchema: Schema<OrderDocument> = new mongoose.Schema(
       required: true,
     },
     expiresAt: {
-      type: String,
+      type: Date,
       required: true,
     },
     ticket: {
