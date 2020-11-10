@@ -8,10 +8,8 @@ import {
   NotAuthorizedError,
   OrderStatus,
 } from "@scope/common";
-
 import mongoose from "mongoose";
 import { Order } from "../models/Orders";
-import { Ticket } from "../models/Ticket";
 import { body } from "express-validator";
 
 import { natsWrapper } from "../NatsWrapper";
@@ -54,6 +52,9 @@ router.delete(
           id: order.ticket.id,
         },
       });
-    } catch (error) {}
+      res.status(204).send(order);
+    } catch (error) {
+      next(error);
+    }
   }
 );

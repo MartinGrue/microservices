@@ -64,7 +64,7 @@ router.post(
           price: ticket.price,
         },
       });
-      return res.status(201).send(ticket);
+      return res.status(201).send(order);
     } catch (error) {
       next(error);
     }
