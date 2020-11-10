@@ -21,13 +21,6 @@ router.delete(
   currentUser,
   requireAuth,
 
-  [
-    body("ticketId")
-      .not()
-      .isEmpty()
-      .custom((input: string) => mongoose.Types.ObjectId(input))
-      .withMessage("TicketId must be provided"),
-  ],
   validateRequest,
   async (
     req: Request<{ orderId: string }>,
