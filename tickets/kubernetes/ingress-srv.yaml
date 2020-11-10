@@ -17,7 +17,7 @@ spec:
           - path: /api/tickets/?(.*)
             backend:
               serviceName: tickets-srv
-              servicePort: 4000
+              servicePort: 2000
           - path: /?(.*)
             backend:
               serviceName: renderer-srv

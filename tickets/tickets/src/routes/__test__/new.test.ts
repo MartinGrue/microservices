@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../../app";
+import {app} from "../../app";
 import { getAuthCookie } from "../../test/helpers";
 import { Ticket } from "../../models/Ticket";
 const validTitle = "1234";
