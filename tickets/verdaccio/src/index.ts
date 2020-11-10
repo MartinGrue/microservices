@@ -9,4 +9,4 @@ export * from "./events/BaseListener";
 export * from "./events/BasePublisher";
 export * from "./events/Subjects";
 export * from "./events/CreateTicketListerner";
-export * from "./events/CreateTicketPublisher";
+export * from "./events/UpdateTicketPublisher";

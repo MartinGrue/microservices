@@ -1,5 +1,7 @@
 import nats from "node-nats-streaming";
 import CreateTicketListerner from "./events/CreateTicketListerner";
+import UpdateTicketListener from "./events/UpdateTicketListener";
+
 console.clear();
 
 const stan = nats.connect("ticketing", "abc", {
@@ -13,6 +15,7 @@ stan.on("connect", async () => {
     process.exit();
   });
   new CreateTicketListerner(stan).listen();
+  new UpdateTicketListener(stan).listen();
 
   // const data = JSON.stringify({
   //   id: '123',
