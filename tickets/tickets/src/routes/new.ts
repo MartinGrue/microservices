@@ -4,7 +4,7 @@ import { body } from "express-validator";
 import { Ticket } from "../models/Ticket";
 import mongoose from "mongoose";
 import CreateTicketPublisher from "@scope/common/build/events/CreateTicketPublisher";
-import {natsWrapper} from "../NatsWrapper";
+import { natsWrapper } from "../NatsWrapper";
 const validTicketId = mongoose.Types.ObjectId().toHexString();
 
 const router = express.Router();
@@ -30,7 +30,7 @@ router.post(
         userId: req.currentUser!.currentUser!.userId,
       });
       await ticket.save();
-      new CreateTicketPublisher(natsWrapper.client).publish({
+      await new CreateTicketPublisher(natsWrapper.client).publish({
         id: ticket.id,
         title: ticket.title,
         price: ticket.price,

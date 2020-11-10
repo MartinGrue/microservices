@@ -1,12 +1,14 @@
 import request from "supertest";
-import {app} from "../../app";
+import { app } from "../../app";
 import { getAuthCookie } from "../../test/helpers";
 import { Ticket } from "../../models/Ticket";
+import { natsWrapper } from "../../NatsWrapper";
 const validTitle = "1234";
 const invalidTitle = "";
 const validPrice = "10";
 const invalidPrice = "";
 const validUserId = "12312123";
+
 it("has a route handler listening to /api/tickets for post request", async () => {
   const response = await request(app).post("/api/tickets").send({});
   expect(response.status).not.toEqual(404);
@@ -61,11 +63,20 @@ it("creates an ticket if input is correct", async () => {
     .post("/api/tickets")
     .set("Cookie", getAuthCookie())
     .send({ title: validTitle, price: validPrice });
+  expect(response.status).toEqual(201);
 
   const tickets = await Ticket.find({});
   expect(tickets.length).toEqual(1);
   expect(tickets[0].title).toEqual(validTitle);
+});
 
+it("publishes an event", async () => {
+  const response = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", getAuthCookie())
+    .send({ title: validTitle, price: validPrice });
   expect(response.status).toEqual(201);
-  expect(response.body.id).toEqual(tickets[0].id)
+
+  console.log(natsWrapper);
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

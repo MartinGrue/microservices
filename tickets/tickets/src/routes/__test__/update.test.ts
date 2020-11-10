@@ -1,8 +1,8 @@
 import request from "supertest";
-import {app} from "../../app";
+import { app } from "../../app";
 import { getAuthCookie } from "../../test/helpers";
 import mongoose from "mongoose";
-
+import { natsWrapper } from "../../NatsWrapper";
 const validTitle = "1234";
 const invalidTitle = "";
 const validPrice = "10";
@@ -103,4 +103,20 @@ it("returns 200 and updates the ticket with valid input", async () => {
     .send({ title: validPrice.concat("0"), price: validPrice });
 
   expect(response.status).toEqual(200);
+});
+it("publishes an event", async () => {
+  const cookie = getAuthCookie();
+  const newTicket = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", cookie)
+    .send({ title: validTitle, price: validPrice });
+  expect(newTicket.status).toEqual(201);
+
+  const response = await request(app)
+    .put(`/api/tickets/${newTicket.body.id}`)
+    .set("Cookie", cookie)
+    .send({ title: validPrice.concat("0"), price: validPrice });
+
+  expect(response.status).toEqual(200);
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

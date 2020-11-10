@@ -1,5 +1,5 @@
 import request from "supertest";
-import {app} from "../../app";
+import { app } from "../../app";
 import { getAuthCookie } from "../../test/helpers";
 import { Ticket } from "../../models/Ticket";
 import mongoose from "mongoose";
@@ -11,13 +11,13 @@ const notexistingTicketId = validTicketId;
 
 it("returns 400 if the ticket is invalid", async () => {
   const response = await request(app)
-    .get(`/api/ticket/${invalidTicketId}`)
+    .get(`/api/tickets/${invalidTicketId}`)
     .send();
   expect(response.status).toEqual(400);
 });
 it("returns 404 if the ticket is not found", async () => {
   const response = await request(app)
-    .get(`/api/ticket/${notexistingTicketId}`)
+    .get(`/api/tickets/${notexistingTicketId}`)
     .send({ title: validTitle.concat("0") });
   expect(response.status).toEqual(404);
 });
@@ -28,9 +28,11 @@ it("returns the ticket if the ticket is found", async () => {
     .send({ title: validTitle, price: validPrice });
 
   expect(newTicket.status).toEqual(201);
+  console.log("status new ticket: ", newTicket.status)
 
+  console.log("new ticket: ", newTicket.body);
   const getTicket = await request(app)
-    .get(`/api/ticket/${newTicket.body.id}`)
+    .get(`/api/tickets/${newTicket.body.id}`)
     .send({});
   expect(getTicket.status).toEqual(200);
   expect(getTicket.body.title).toEqual(validTitle);

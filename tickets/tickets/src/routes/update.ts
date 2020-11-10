@@ -9,7 +9,7 @@ import {
 import { body } from "express-validator";
 import { Ticket } from "../models/Ticket";
 import UpdateTicketPublisher from "@scope/common/build/events/UpdateTicketPublisher";
-import {natsWrapper} from "../NatsWrapper";
+import { natsWrapper } from "../NatsWrapper";
 const router = express.Router();
 router.put(
   "/api/tickets/:id",
@@ -38,7 +38,7 @@ router.put(
       ticket.title = title;
       ticket.price = price;
       ticket.save();
-      new UpdateTicketPublisher(natsWrapper.client).publish({
+      await new UpdateTicketPublisher(natsWrapper.client).publish({
         id: ticket.id,
         title: ticket.title,
         price: ticket.price,
