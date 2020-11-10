@@ -3,7 +3,7 @@ import { TicketCreatedEvent } from "./EventTypes";
 import { Message } from "node-nats-streaming";
 import { Subjects } from "./Subjects";
 
-export default class extends Listener<TicketCreatedEvent> {
+export class CreateTicketListerner extends Listener<TicketCreatedEvent> {
   onMessage(data: TicketCreatedEvent["data"], msg: Message) {
     console.log("Event data!", data);
 

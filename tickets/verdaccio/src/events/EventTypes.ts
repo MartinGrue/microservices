@@ -1,3 +1,4 @@
+import { OrderStatus } from "./helper/order-status";
 import { Subjects } from "./Subjects";
 
 export interface Event {
@@ -22,5 +23,37 @@ export interface TicketUpdatedEvent extends Event {
     price: number;
     userId: string;
     version: number;
+  };
+}
+
+// id: order.id,
+// version: order.version,
+// status: order.status,
+// userId: order.userId,
+// expiresAt: order.expiresAt.toISOString(),
+// ticket: {
+//   id: ticket.id,
+//   price: ticket.price,
+// },
+export interface OrderCreatedEvent extends Event {
+  subject: Subjects.OrderCreated;
+  data: {
+    id: string;
+    version: number;
+    status: OrderStatus;
+    userId: string;
+    expiresAt: string;
+    ticket: { id: string; price: string };
+  };
+}
+export interface OrderCancelledEvent extends Event {
+  subject: Subjects.OrderCancelled;
+  data: {
+    id: string;
+    version: number;
+    // status: OrderStatus;
+    // userId: string;
+    // expiresAt: string;
+    ticket: { id: string };
   };
 }
