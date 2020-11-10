@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.get(
   "/api/orders",
-  currentUser,
   requireAuth,
   async (req: Request, res: Response, next: NextFunction) => {
     try {

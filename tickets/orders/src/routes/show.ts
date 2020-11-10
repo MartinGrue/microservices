@@ -1,9 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import {
   requireAuth,
-  validateRequest,
   BadRequestError,
-  currentUser,
   NotAuthorizedError,
 } from "@scope/common";
 import { Order } from "../models/Orders";
@@ -11,10 +9,7 @@ import { Order } from "../models/Orders";
 const router = express.Router();
 router.get(
   "/api/orders/:ordersId",
-  currentUser,
   requireAuth,
-
-  validateRequest,
   async (
     req: Request<{ orderId: string }>,
     res: Response,
@@ -35,4 +30,4 @@ router.get(
     }
   }
 );
-export { router as showTicketRouter };
+export { router as showOrderRouter };

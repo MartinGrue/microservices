@@ -2,26 +2,18 @@ import express, { Request, Response, NextFunction } from "express";
 import {
   CancelOrderPublisher,
   requireAuth,
-  validateRequest,
-  currentUser,
   BadRequestError,
   NotAuthorizedError,
   OrderStatus,
 } from "@scope/common";
-import mongoose from "mongoose";
 import { Order } from "../models/Orders";
-import { body } from "express-validator";
 
 import { natsWrapper } from "../NatsWrapper";
 const router = express.Router();
 
 router.delete(
   "/api/orders/:orderId",
-
-  currentUser,
   requireAuth,
-
-  validateRequest,
   async (
     req: Request<{ orderId: string }>,
     res: Response,
@@ -51,3 +43,4 @@ router.delete(
     }
   }
 );
+export { router as deleteOrderRouter };

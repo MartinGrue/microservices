@@ -48,7 +48,7 @@ interface OrderModel extends Model<OrderDocument> {
   build(order: IOrder): OrderDocument;
 }
 
-const Order = model<OrderDocument, OrderModel>("ticket", orderSchema);
+const Order = model<OrderDocument, OrderModel>("orders", orderSchema);
 Order.build = (order: IOrder) => {
   return new Order(order);
 };

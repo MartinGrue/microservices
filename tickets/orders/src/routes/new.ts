@@ -3,7 +3,7 @@ import {
   CreateOrderPublisher,
   requireAuth,
   validateRequest,
-  currentUser,
+  
   BadRequestError,
   OrderStatus,
 } from "@scope/common";
@@ -19,10 +19,7 @@ const router = express.Router();
 
 router.post(
   "/api/orders",
-
-  currentUser,
   requireAuth,
-
   [
     body("ticketId")
       .not()
@@ -70,4 +67,4 @@ router.post(
     }
   }
 );
-export { router as createTicketRouter };
+export { router as createOrderRouter };
