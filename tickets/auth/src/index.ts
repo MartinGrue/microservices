@@ -19,8 +19,8 @@ const start = async () => {
   } catch (error) {
     console.log(error);
   }
-  app.listen(4000, () => {
-    console.log("auth listening on 4000");
+  app.listen(3000, () => {
+    console.log("auth listening on 3000");
   });
 };
 start();
