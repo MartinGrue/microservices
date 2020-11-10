@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t $IMAGE --network host . 
+docker build -t $IMAGE . 
