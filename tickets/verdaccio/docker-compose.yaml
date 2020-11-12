@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+  verdaccio:
+    container_name: verdaccio
+    image: verdaccio
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # environment:
+    #   - PUID=1000
+    #   - PGID=1000
+    ports:
+      - "4873:4873"
