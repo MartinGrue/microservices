@@ -66,6 +66,7 @@ it("creates an ticket if input is correct", async () => {
   expect(response.status).toEqual(201);
 
   const tickets = await Ticket.find({});
+  console.log(tickets);
   expect(tickets.length).toEqual(1);
   expect(tickets[0].title).toEqual(validTitle);
 });

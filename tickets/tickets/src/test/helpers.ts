@@ -1,5 +1,3 @@
-import request from "supertest";
-import {app} from "../app";
 import jsonwebtoken from "jsonwebtoken";
 import mongoose from "mongoose";
 export const getAuthCookie = (): string[] => {

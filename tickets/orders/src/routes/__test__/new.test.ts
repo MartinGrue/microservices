@@ -1,7 +1,9 @@
 import request from "supertest";
 import { app } from "../../app";
 import { getAuthCookie } from "../../test/helpers";
+import { Ticket } from "../../models/Ticket";
 import { Order } from "../../models/Orders";
+import mongoose from "mongoose";
 import { natsWrapper } from "../../NatsWrapper";
 const invalidTicketId = "";
 const validTitle = "1234";
@@ -43,53 +45,63 @@ it("returns an 400 error if a invalid ticketId is provided in the body", async (
   expect(response.status).toEqual(400);
 });
 it("returns 401 if the user is not allowed to create an order", async () => {
-  const cookie = getAuthCookie();
-
-  const newTicket = await request(app)
-    .post("/api/tickets")
-    .set("Cookie", cookie)
-    .send({ title: validTitle, price: validPrice });
-  expect(newTicket.status).toEqual(201);
-
-  const response = await request(app)
-    .post("api/orders")
-    .set("Cookie", getAuthCookie())
-    .send({ ticketId: newTicket.body.id });
-  expect(response.status).toEqual(201);
-});
-
-it("creates an order if the input is correct", async () => {
-  const cookie = getAuthCookie();
-
-  const newTicket = await request(app)
-    .post("/api/tickets")
-    .set("Cookie", cookie)
-    .send({ title: validTitle, price: validPrice });
-  expect(newTicket.status).toEqual(201);
+  const ticket = Ticket.build({
+    title: "concert",
+    price: 20,
+  });
+  await ticket.save();
 
   const response = await request(app)
     .post("/api/orders")
-    .set("Cookie", cookie)
-    .send({ ticketId: newTicket.body.id });
+    .send({ ticketId: ticket.id });
+  expect(response.status).toEqual(401);
+});
+
+it("returns an error if the ticket is already reserved", async () => {
+  const ticket = Ticket.build({
+    title: "concert",
+    price: 20,
+  });
+  await ticket.save();
+  const reserve = await request(app)
+    .post("/api/orders")
+    .set("Cookie", getAuthCookie())
+    .send({ ticketId: ticket.id });
+  expect(reserve.status).toEqual(201);
+
+  const reserveAgain = await request(app)
+    .post("/api/orders")
+    .set("Cookie", getAuthCookie())
+    .send({ ticketId: ticket.id });
+  expect(reserveAgain.status).toEqual(404);
+});
+it("creates an order if the input is correct", async () => {
+  const ticket = Ticket.build({
+    title: "concert",
+    price: 20,
+  });
+  await ticket.save();
+
+  const response = await request(app)
+    .post("/api/orders")
+    .set("Cookie", getAuthCookie())
+    .send({ ticketId: ticket.id });
   expect(response.status).toEqual(201);
 
   const orders = await Order.find({});
   expect(orders.length).toEqual(1);
 });
-
 it("publishes an event", async () => {
-  const cookie = getAuthCookie();
-
-  const newTicket = await request(app)
-    .post("/api/tickets")
-    .set("Cookie", cookie)
-    .send({ title: validTitle, price: validPrice });
-  expect(newTicket.status).toEqual(201);
+  const ticket = Ticket.build({
+    title: "concert",
+    price: 20,
+  });
+  await ticket.save();
 
   const response = await request(app)
     .post("/api/orders")
-    .set("Cookie", cookie)
-    .send({ ticketId: newTicket.body.id });
+    .set("Cookie", getAuthCookie())
+    .send({ ticketId: ticket.id });
   expect(response.status).toEqual(201);
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

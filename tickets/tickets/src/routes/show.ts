@@ -9,7 +9,7 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       console.log(req.params.id);
-      const ticket = await Ticket.findById(req.params.id.toString());
+      const ticket = await Ticket.findById(req.params.id);
       if (!ticket) {
         throw new BadRequestError("invalid Credentials");
       }

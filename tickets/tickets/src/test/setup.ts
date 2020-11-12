@@ -10,6 +10,7 @@ beforeAll(async () => {
   await mongoose.connect(connectString, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   });
 });
 beforeEach(async () => {

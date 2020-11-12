@@ -8,18 +8,18 @@ import { Order } from "../models/Orders";
 
 const router = express.Router();
 router.get(
-  "/api/orders/:ordersId",
+  "/api/orders/:orderId",
   requireAuth,
   async (
-    req: Request<{ orderId: string }>,
+    req: Request,
     res: Response,
     next: NextFunction
   ) => {
     try {
-      const { orderId } = req.params;
+      const orderId = req.params.orderId;
       const order = await Order.findById(orderId).populate("ticket");
       if (!order) {
-        throw new BadRequestError("invalid order Id");
+        throw new BadRequestError("can not find order");
       }
       if (req.currentUser!.currentUser!.userId !== order.userId) {
         throw new NotAuthorizedError();

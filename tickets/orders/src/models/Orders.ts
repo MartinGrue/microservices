@@ -27,12 +27,11 @@ const orderSchema: Schema<OrderDocument> = new mongoose.Schema(
     },
     ticket: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Ticket",
+      ref: "ticket",
     },
   },
 
   {
-    collection: "orders",
     toJSON: {
       transform(doc: OrderDocument, ret) {
         ret.id = ret._id;

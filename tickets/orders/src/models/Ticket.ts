@@ -31,7 +31,6 @@ const ticketSchema: Schema<TicketDocument> = new mongoose.Schema(
   },
 
   {
-    collection: "tickets",
     toJSON: {
       transform(doc: TicketDocument, ret) {
         ret.id = ret._id;
@@ -59,7 +58,7 @@ ticketSchema.methods.isReserved = async function () {
   return !!existingOrder;
 };
 
-const Ticket = model<TicketDocument, TicketModel>("tickets", ticketSchema);
+const Ticket = model<TicketDocument, TicketModel>("ticket", ticketSchema);
 Ticket.build = (ticket: ITicket) => {
   return new Ticket(ticket);
 };
