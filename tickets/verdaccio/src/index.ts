@@ -8,6 +8,7 @@ export * from "./middleware/validate-request";
 export * from "./events/BaseListener";
 export * from "./events/BasePublisher";
 export * from "./events/Subjects";
+export * from "./events/EventTypes";
 
 export * from "./events/CreateTicketPublisher";
 export * from "./events/CreateTicketListerner";

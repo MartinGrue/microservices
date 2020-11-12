@@ -1,10 +1,11 @@
 import mongoose, { Schema, Document, Model, model } from "mongoose";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 import { OrderStatus } from "@scope/common";
-import {Order} from "./Orders"
+import { Order } from "./Orders";
 interface ITicket {
   title: string;
   price: number;
+  ticketId: string;
 }
 export interface TicketDocument extends Document, ITicket {
   version: number;
@@ -57,9 +58,18 @@ ticketSchema.methods.isReserved = async function () {
 
   return !!existingOrder;
 };
-
-const Ticket = model<TicketDocument, TicketModel>("ticket", ticketSchema);
-Ticket.build = (ticket: ITicket) => {
-  return new Ticket(ticket);
+ticketSchema.statics.findByEvent = (event: { id: string; version: number }) => {
+  return Ticket.findOne({
+    _id: event.id,
+    version: event.version - 1,
+  });
 };
+ticketSchema.statics.build = (ticket: ITicket) => {
+  return new Ticket({
+    _id: ticket.ticketId,
+    ...ticket,
+  });
+};
+const Ticket = model<TicketDocument, TicketModel>("ticket", ticketSchema);
+
 export { Ticket };

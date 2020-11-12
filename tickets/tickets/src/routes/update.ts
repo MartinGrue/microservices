@@ -35,9 +35,11 @@ router.put(
       if (req.currentUser!.currentUser!.userId !== ticket.userId) {
         throw new NotAuthorizedError();
       }
+      console.log("ticketverion in ticket update service", ticket.version);
+
       ticket.title = title;
       ticket.price = price;
-      ticket.save();
+      await ticket.save();
       await new UpdateTicketPublisher(natsWrapper.client).publish({
         id: ticket.id,
         title: ticket.title,
@@ -45,6 +47,7 @@ router.put(
         userId: ticket.userId,
         version: ticket.version,
       });
+      console.log("ticketverion in ticket update service", ticket.version);
       res.status(200).send(ticket);
     } catch (error) {
       next(error);
