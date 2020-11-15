@@ -2,6 +2,7 @@ import request from "supertest";
 import { app } from "../../app";
 import { getAuthCookie } from "../../test/helpers";
 import { Ticket, TicketDocument } from "../../models/Ticket";
+import mongoose from "mongoose";
 const validTitle = "1234";
 const validPrice = "10";
 const cookieUser1 = getAuthCookie();
@@ -9,6 +10,7 @@ const cookieUser2 = getAuthCookie();
 
 const buildTicket = async () => {
   const ticket = Ticket.build({
+    ticketId: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });

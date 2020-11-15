@@ -1,9 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import {
-  CreateOrderPublisher,
   requireAuth,
   validateRequest,
-  
   BadRequestError,
   OrderStatus,
 } from "@scope/common";
@@ -11,7 +9,7 @@ import mongoose from "mongoose";
 import { Order } from "../models/Orders";
 import { Ticket } from "../models/Ticket";
 import { body } from "express-validator";
-
+import { CreateOrderPublisher } from "../events/CreateOrderPublisher";
 import { natsWrapper } from "../NatsWrapper";
 
 const EXPIRATION_WINDOW_SECONDS = 1 * 60;

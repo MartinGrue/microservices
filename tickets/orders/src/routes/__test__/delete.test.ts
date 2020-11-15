@@ -28,6 +28,7 @@ it("returns 400 if the order id is invalid", async () => {
 it("returns 401 if the user is not authenticated", async () => {
   const cookie = getAuthCookie();
   const ticket = Ticket.build({
+    ticketId: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -49,6 +50,7 @@ it("returns 401 if the user is not authenticated", async () => {
 it("returns 401 if the user is not allowed to delete an order", async () => {
   const cookie = getAuthCookie();
   const ticket = Ticket.build({
+    ticketId: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -73,6 +75,7 @@ it("returns 401 if the user is not allowed to delete an order", async () => {
 it("returns 200 and delete the order with valid order id", async () => {
   const cookie = getAuthCookie();
   const ticket = Ticket.build({
+    ticketId: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -95,6 +98,7 @@ it("returns 200 and delete the order with valid order id", async () => {
 it("publishes an event", async () => {
   const cookie = getAuthCookie();
   const ticket = Ticket.build({
+    ticketId: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });

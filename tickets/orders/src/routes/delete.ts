@@ -1,13 +1,12 @@
 import express, { Request, Response, NextFunction } from "express";
 import {
-  CancelOrderPublisher,
   requireAuth,
   BadRequestError,
   NotAuthorizedError,
   OrderStatus,
 } from "@scope/common";
 import { Order } from "../models/Orders";
-
+import { CancelOrderPublisher } from "../events/CancelOrderPublisher";
 import { natsWrapper } from "../NatsWrapper";
 const router = express.Router();
 
