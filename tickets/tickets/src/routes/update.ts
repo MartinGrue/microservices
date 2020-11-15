@@ -5,11 +5,11 @@ import {
   BadRequestError,
   currentUser,
   NotAuthorizedError,
-  UpdateTicketPublisher,
 } from "@scope/common";
 import { body } from "express-validator";
 import { Ticket } from "../models/Ticket";
 import { natsWrapper } from "../NatsWrapper";
+import { UpdateTicketPublisher } from "../events/UpdateTicketPublisher";
 const router = express.Router();
 router.put(
   "/api/tickets/:id",

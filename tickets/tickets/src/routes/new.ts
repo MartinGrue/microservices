@@ -1,9 +1,9 @@
 import express, { Request, Response, NextFunction } from "express";
-import { requireAuth, validateRequest, currentUser, CreateTicketPublisher } from "@scope/common";
+import { requireAuth, validateRequest, currentUser } from "@scope/common";
 import { body } from "express-validator";
 import { Ticket } from "../models/Ticket";
 import { natsWrapper } from "../NatsWrapper";
-
+import {CreateTicketPublisher} from "../events/CreateTicketPublisher"
 const router = express.Router();
 
 router.post(
