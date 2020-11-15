@@ -27,7 +27,6 @@ router.put(
   ) => {
     try {
       const { title, price } = req.body;
-      console.log(req.params.id);
       const ticket = await Ticket.findById(req.params.id.toString());
       if (!ticket) {
         throw new BadRequestError("invalid Ticket Id");
@@ -35,8 +34,6 @@ router.put(
       if (req.currentUser!.currentUser!.userId !== ticket.userId) {
         throw new NotAuthorizedError();
       }
-      console.log("ticketverion in ticket update service", ticket.version);
-
       ticket.title = title;
       ticket.price = price;
       await ticket.save();
@@ -47,7 +44,6 @@ router.put(
         userId: ticket.userId,
         version: ticket.version,
       });
-      console.log("ticketverion in ticket update service", ticket.version);
       res.status(200).send(ticket);
     } catch (error) {
       next(error);

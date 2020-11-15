@@ -66,7 +66,6 @@ it("creates an ticket if input is correct", async () => {
   expect(response.status).toEqual(201);
 
   const tickets = await Ticket.find({});
-  console.log(tickets);
   expect(tickets.length).toEqual(1);
   expect(tickets[0].title).toEqual(validTitle);
 });
@@ -77,7 +76,5 @@ it("publishes an event", async () => {
     .set("Cookie", getAuthCookie())
     .send({ title: validTitle, price: validPrice });
   expect(response.status).toEqual(201);
-
-  console.log(natsWrapper);
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

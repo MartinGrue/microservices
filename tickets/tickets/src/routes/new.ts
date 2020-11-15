@@ -20,7 +20,6 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { title, price } = req.body;
-      console.log(req.currentUser!);
       const ticket = Ticket.build({
         title,
         price,

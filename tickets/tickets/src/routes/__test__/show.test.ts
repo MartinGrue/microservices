@@ -1,7 +1,6 @@
 import request from "supertest";
 import { app } from "../../app";
 import { getAuthCookie } from "../../test/helpers";
-import { Ticket } from "../../models/Ticket";
 import mongoose from "mongoose";
 const validTitle = "1234";
 const validPrice = "10";
@@ -28,9 +27,6 @@ it("returns the ticket if the ticket is found", async () => {
     .send({ title: validTitle, price: validPrice });
 
   expect(newTicket.status).toEqual(201);
-  console.log("status new ticket: ", newTicket.status)
-
-  console.log("new ticket: ", newTicket.body);
   const getTicket = await request(app)
     .get(`/api/tickets/${newTicket.body.id}`)
     .send({});
