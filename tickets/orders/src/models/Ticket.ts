@@ -60,7 +60,7 @@ ticketSchema.methods.isReserved = async function () {
 };
 ticketSchema.statics.findByEvent = (event: { id: string; version: number }) => {
   return Ticket.findOne({
-    _id: event.id,
+    _id: event.id, 
     version: event.version - 1,
   });
 };
