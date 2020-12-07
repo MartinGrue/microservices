@@ -40,8 +40,5 @@ router.post(
     }
   }
 );
-router.get("/api/users/signup", (req, res) => {
-  console.log("Hi from router");
-  res.send();
-});
+
 export { router as signupRouter };

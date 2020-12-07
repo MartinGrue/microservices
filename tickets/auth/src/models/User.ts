@@ -29,15 +29,18 @@ interface IUser {
 }
 interface UserDocument extends Document, IUser {}
 
-userSchema.pre<UserDocument>("save", async function (this: UserDocument, next) {
-  const user = this;
-  if (!user.isModified("password")) {
-    return next;
-  }
-  const hashedPassword = await Password.toHash(user.password);
-  user.password = hashedPassword;
-  next();
-});
+const middlewareFunctions = {
+  hashPassword: async function (this: UserDocument, next: any) {
+    const user = this;
+    if (user.isModified("password")) {
+      const hashedPassword = await Password.toHash(user.password);
+      user.password = hashedPassword;
+    }
+    next();
+  },
+};
+
+userSchema.pre<UserDocument>("save", middlewareFunctions.hashPassword);
 
 interface IUserModel extends Model<UserDocument> {
   build(user: IUser): UserDocument;
