@@ -35,7 +35,44 @@ const setup = async () => {
 
   return { listener, ticket, data, msg };
 };
+it("throws an error when the ticket to be updated can not be found", async (done) => {
+  // Create a listener
+  const listener = new CreateOrderListener(natsWrapper.client);
 
+  // Create and a fake ticket
+  const ticket = Ticket.build({
+    title: "new title",
+    price: 10,
+    userId: new mongoose.Types.ObjectId().toHexString(),
+  });
+
+  await ticket.save();
+  const orderId = mongoose.Types.ObjectId().toHexString();
+
+  // Create a fake data object
+  const data: OrderCreatedEvent["data"] = {
+    id: mongoose.Types.ObjectId().toHexString(),
+    version: 0,
+    status: OrderStatus.Created,
+    userId: "alskdfj",
+    expiresAt: "alskdjf",
+    ticket: {
+      id: new mongoose.Types.ObjectId().toHexString(),
+      price: ticket.price,
+    },
+  };
+
+  // Create a fake msg object
+  // @ts-ignore
+  const msg: Message = {
+    ack: jest.fn(),
+  };
+  try {
+    await listener.onMessage(data, msg);
+  } catch (error) {
+    return done();
+  }
+});
 it("sets the orderId of the ticket", async () => {
   const { listener, ticket, data, msg } = await setup();
 
