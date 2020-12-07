@@ -57,7 +57,20 @@ it("returns 401 if the user is not allowed to create an order", async () => {
     .send({ ticketId: ticket.id });
   expect(response.status).toEqual(401);
 });
+it("returns 404 if the tickerid is valid but can not be found", async () => {
+  const ticket = Ticket.build({
+    ticketId: new mongoose.Types.ObjectId().toHexString(),
+    title: "concert",
+    price: 20,
+  });
+  await ticket.save();
 
+  const response = await request(app)
+    .post("/api/orders")
+    .set("Cookie", getAuthCookie())
+    .send({ ticketId: new mongoose.Types.ObjectId().toHexString() });
+  expect(response.status).toEqual(404);
+});
 it("returns an error if the ticket is already reserved", async () => {
   const ticket = Ticket.build({
     ticketId: new mongoose.Types.ObjectId().toHexString(),

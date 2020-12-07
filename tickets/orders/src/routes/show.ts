@@ -10,24 +10,16 @@ const router = express.Router();
 router.get(
   "/api/orders/:orderId",
   requireAuth,
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const orderId = req.params.orderId;
-      const order = await Order.findById(orderId).populate("ticket");
-      if (!order) {
-        throw new BadRequestError("can not find order");
-      }
-      if (req.currentUser!.currentUser!.userId !== order.userId) {
-        throw new NotAuthorizedError();
-      }
-      res.status(200).send(order);
-    } catch (error) {
-      next(error);
+  async (req: Request, res: Response, next: NextFunction) => {
+    const orderId = req.params.orderId;
+    const order = await Order.findById(orderId).populate("ticket");
+    if (!order) {
+      throw new BadRequestError("can not find order");
     }
+    if (req.currentUser!.currentUser!.userId !== order.userId) {
+      throw new NotAuthorizedError();
+    }
+    res.status(200).send(order);
   }
 );
 export { router as showOrderRouter };

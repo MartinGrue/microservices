@@ -54,13 +54,12 @@ it("returns 401 if the user is not allowed to view the order", async () => {
     .send({ ticketId: ticket.id });
   expect(newOrder.status).toEqual(201);
 
-  const order = await Order.find({ ticket: ticket.id });
-  expect(order.length).toEqual(1);
+  const order = await Order.findOne({ ticket: ticket.id });
 
   const response = await request(app)
-    .get(`/api/orders/${validOrderId}`)
+    .get(`/api/orders/${order!.id}`)
     .set("Cookie", getAuthCookie());
-  expect(response.status).toEqual(404);
+  expect(response.status).toEqual(401);
 });
 
 it("returns the order and status code 200 if the input is valid", async () => {
