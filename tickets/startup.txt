@@ -16,3 +16,10 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 
 configure /etc/host to point to the output of "minikube ip"
+
+minikube start
+docker network connect minikubenet minikube
+//bring up verdaccio: docker-compose down && docker-compose build --no-cache && docker-compose up
+docker network connect minikubenet verdaccio
+bash adduser.sh
+bash publish.sh
