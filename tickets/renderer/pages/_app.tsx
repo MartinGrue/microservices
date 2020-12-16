@@ -2,7 +2,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import { AppProps, AppContext } from "next/app";
 import { NextPage, NextPageContext } from "next";
 import { ICurrentUser } from "../app/models/User";
-import { createAxiosInstance, createAgent, Agent } from "../app/api/createCustomAxios";
+import {
+  createAxiosInstance,
+  createAgent,
+  Agent,
+} from "../app/api/createCustomAxios";
 import App from "next/app";
 import {
   AppType,
@@ -31,36 +35,40 @@ const MyApp: NextComponentType<AppContext, AppInitialProps, MyProps> = ({
   );
 };
 
-interface Context extends NextPageContext {
-  // any modifications to the default context, e.g. query types
+export interface InjectionProps {
   agent: Agent;
+  currentUser: ICurrentUser;
 }
-MyApp.getInitialProps = async (appContext: AppContext) => {
+export interface Context extends NextPageContext, InjectionProps {
+  // any modifications to the default context, e.g. query types
+}
+MyApp.getInitialProps = async (
+  appContext: AppContext
+): Promise<AppInitialProps & InjectionProps> => {
   // calls page's `getInitialProps` and fills `appProps.pageProps`
-
+  console.log("in app");
   const axiosInstance = createAxiosInstance(appContext.ctx.req);
   const agent = createAgent(axiosInstance);
-
-  const appProps = await App.getInitialProps(appContext);
-  const customContext: Context = { ...appContext.ctx, agent };
-  const pageProps = appContext.Component.getInitialProps
-    ? await appContext.Component.getInitialProps(customContext)
-    : {};
-  appProps.pageProps = pageProps;
-
 
   //pass down agent to store creation
   console.log("in app init");
   try {
     const currentUser = await agent.User.fetchCurrentUser();
-    console.log(currentUser.currentUser);
+    // console.log("current user: ", currentUser);
+    const customContext: Context = { ...appContext.ctx, agent, currentUser };
 
-    return { ...appProps, currentUser };
+    const pageProps = appContext.Component.getInitialProps
+      ? await appContext.Component.getInitialProps(customContext)
+      : {};
+    const appProps = await App.getInitialProps(appContext);
+
+    appProps.pageProps = pageProps;
+
+    return { ...appProps, currentUser, agent };
   } catch (error) {
-    const currentUser = await Promise.resolve<ICurrentUser>({
-      currentUser: null,
-    });
-    return { ...appProps, currentUser };
+    const appProps = await App.getInitialProps(appContext);
+
+    return { ...appProps, currentUser: undefined, agent };
   }
 };
 

@@ -9,52 +9,56 @@ import {
 } from "../app/api/createCustomAxios";
 import { ICurrentUser } from "../app/models/User";
 import color from "@scope/common";
-interface Props {
-  currentUser: ICurrentUser;
+import { Context, InjectionProps } from "./_app";
+import { ITicket } from "../app/models/Ticket";
+import Link from "next/link";
+interface PageProps extends InjectionProps {
+  tickets: ITicket[];
 }
 
-const index: NextPage<Props> = ({ currentUser }) => {
+const index: NextPage<PageProps> = ({ currentUser, tickets }) => {
+  const ticketList = tickets.map((ticket) => {
+    return (
+      <tr key={ticket.title}>
+        <td>{ticket.title}</td>
+        <td>{ticket.price}</td>
+        <td>
+          <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
+            <a>View</a>
+          </Link>
+        </td>
+      </tr>
+    );
+  });
   return (
     <div>
-      {currentUser.currentUser ? (
-        <h1>You are signed in</h1>
-      ) : (
-        <h1>You are signed out</h1>
-      )}
-      <button
-        type="submit"
-        className="btn btn-primary"
-        onClick={(e) => {
-          Router.push("/auth/signup");
-        }}
-      >
-        Go to signup
-      </button>
+      <h2>Tickets</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>{ticketList}</tbody>
+      </table>
     </div>
   );
 };
-interface Context extends NextPageContext {
-  // any modifications to the default context, e.g. query types
-  agent: Agent;
-}
 
-index.getInitialProps = async (ctx: Context): Promise<Props> => {
-  console.log("this is color form common module in index page: ", color);
-  console.log('\x1b[36m%s\x1b[0m', 'I am cyan');
-  const { req, agent } = ctx;
-
+index.getInitialProps = async (ctx: Context): Promise<PageProps> => {
   try {
-    const currentUser = await agent.User.fetchCurrentUser();
-    console.log("currentUser is: ",currentUser);
-    return { currentUser };
+    // console.log("\x1b[36m%s\x1b[0m", "I am cyan");
+    const { req, agent, currentUser } = ctx;
+    const tickets = await agent.Ticket.getAllTickets();
+    return { currentUser, agent, tickets };
   } catch (error) {
     const currentUser = await Promise.resolve<ICurrentUser>({
       currentUser: null,
     });
 
-    return {
-      currentUser,
-    };
+    return { currentUser, agent: undefined, tickets: [] };
   }
 };
 export default index;

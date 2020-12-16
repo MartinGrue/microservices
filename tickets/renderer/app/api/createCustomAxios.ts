@@ -2,16 +2,21 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { ICurrentUser } from "../models/User";
 import { NextPageContext } from "next";
 import { IncomingMessage } from "http";
+import { ITicket } from "../models/Ticket";
 export interface Agent {
   axiosInstance: AxiosInstance;
   User: {
     fetchCurrentUser: () => Promise<ICurrentUser>;
     // signIn: (user: IUserRequest) => Promise<IUser>;
   };
+  Ticket: {
+    getAllTickets: () => Promise<ITicket[]>;
+    getTicket: (id: string | string[]) => Promise<ITicket>;
+  };
 }
 export const createAxiosInstance = (req: IncomingMessage): AxiosInstance => {
   if (typeof window === "undefined") {
-    console.log("window is undefined")
+    console.log("window is undefined");
     const axiosInstance = axios.create({
       baseURL:
         "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
@@ -44,5 +49,10 @@ export const createAgent = (axiosInstance: AxiosInstance): Agent => {
     fetchCurrentUser: (): Promise<ICurrentUser> =>
       requests.get("/api/users/currentuser"),
   };
-  return { axiosInstance, User };
+  const Ticket = {
+    getAllTickets: (): Promise<ITicket[]> => requests.get("/api/tickets"),
+    getTicket: (id: string | string[]): Promise<ITicket> =>
+      requests.get(`/api/tickets/${id}`),
+  };
+  return { axiosInstance, User, Ticket };
 };
