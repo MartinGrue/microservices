@@ -1,6 +1,6 @@
 import { time } from "console";
 import { useState } from "react";
-import { IOrder } from "../../app/models/Order";
+import { IOrder } from "../models/Order";
 
 const useTimeLeft = (order: IOrder) => {
   const [timeLeft, setTimeLeft] = useState(0);

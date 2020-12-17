@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import React, { useEffect } from "react";
 import { IOrder } from "../../app/models/Order";
 import { ITicket } from "../../app/models/Ticket";
-import { useTimeLeft } from "../hooks/timeleft";
+import { useTimeLeft } from "../../app/hooks/timeleft";
 import { Context, InjectionProps } from "../_app";
 import Order from "../../components/Order";
 interface PageProps extends InjectionProps {

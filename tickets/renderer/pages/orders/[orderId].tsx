@@ -4,13 +4,14 @@ import Router from "next/router";
 import { NextPage } from "next";
 import { Context, InjectionProps } from "../_app";
 import { IOrder } from "../../app/models/Order";
-import { useTimeLeft } from "../hooks/timeleft";
+import { useTimeLeft } from "../../app/hooks/timeleft";
 
 interface PageProps extends InjectionProps {
   order: IOrder;
 }
 const OrderShow: NextPage<PageProps> = ({ order, currentUser }) => {
   const { timeLeft, findTimeLeft } = useTimeLeft(order);
+
   useEffect(() => {
     const timerId = setInterval(findTimeLeft, 1000);
     console.log(timeLeft);

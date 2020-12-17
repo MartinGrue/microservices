@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { IOrder } from "../app/models/Order";
-import { useTimeLeft } from "../pages/hooks/timeleft";
+import { useTimeLeft } from "../app/hooks/timeleft";
 
 interface Props {
   order: IOrder;
