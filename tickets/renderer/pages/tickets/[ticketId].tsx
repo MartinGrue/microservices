@@ -6,8 +6,12 @@ import { Context, InjectionProps } from "../_app";
 interface PageProps extends InjectionProps {
   ticket: ITicket;
 }
-const TicketShow: NextPage<PageProps> = ({ ticket }) => {
-  const createOrder = () => {};
+const TicketShow: NextPage<PageProps> = ({ ticket, agent }) => {
+  const createOrder = async () => {
+    console.log(ticket.id);
+    const order = await agent.Order.createNewOrder(ticket.id);
+    Router.push("/orders/[orderId]", `/orders/${order.id}`);
+  };
 
   return (
     <div>

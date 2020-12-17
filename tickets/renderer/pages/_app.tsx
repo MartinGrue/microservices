@@ -14,6 +14,8 @@ import {
   AppInitialProps,
 } from "next/dist/next-server/lib/utils";
 import Header from "../components/Header";
+import 'bootstrap/dist/css/bootstrap.css';
+
 interface InitProps {
   currentUser: ICurrentUser;
 }
@@ -30,7 +32,9 @@ const MyApp: NextComponentType<AppContext, AppInitialProps, MyProps> = ({
   return (
     <div>
       <Header currentUser={currentUser}></Header>
-      <Component {...pageProps}></Component>
+      <div className="container">
+        <Component {...pageProps}></Component>
+      </div>
     </div>
   );
 };
