@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { ICurrentUser } from "../models/User";
 import { NextPageContext } from "next";
 import { IncomingMessage } from "http";
-import { ITicket } from "../models/Ticket";
+import { ITicket, NewTicketBody } from "../models/Ticket";
 import { IOrder } from "../models/Order";
 export interface Agent {
   axiosInstance: AxiosInstance;
@@ -13,6 +13,7 @@ export interface Agent {
   Ticket: {
     getAllTickets: () => Promise<ITicket[]>;
     getTicket: (id: string | string[]) => Promise<ITicket>;
+    createNewTicket: (body: NewTicketBody) => Promise<ITicket>;
   };
   Order: {
     createNewOrder: (tickerId: string | string[]) => Promise<IOrder>;
@@ -58,6 +59,8 @@ export const createAgent = (axiosInstance: AxiosInstance): Agent => {
     getAllTickets: (): Promise<ITicket[]> => requests.get("/api/tickets"),
     getTicket: (id: string | string[]): Promise<ITicket> =>
       requests.get(`/api/tickets/${id}`),
+    createNewTicket: (body: NewTicketBody): Promise<ITicket> =>
+      requests.post("/api/tickets", body),
   };
   const Order = {
     createNewOrder: (ticketId: string | string[]): Promise<IOrder> =>

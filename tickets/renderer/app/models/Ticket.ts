@@ -5,3 +5,7 @@ export interface ITicket {
   userId: string;
   orderId: string;
 }
+export interface NewTicketBody {
+  title: string;
+  price: number;
+}

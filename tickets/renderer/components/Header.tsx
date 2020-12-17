@@ -8,6 +8,8 @@ const Header: React.FC<HeaderProps> = ({ currentUser }) => {
   const links = [
     !currentUser.currentUser && { label: "sign Up", href: "/auth/signup" },
     !currentUser.currentUser && { label: "sign In", href: "/auth/signin" },
+    currentUser && { label: "Sell Tickets", href: "/tickets/new" },
+    currentUser && { label: "My Orders", href: "/orders" },
     currentUser.currentUser && { label: "sign Out", href: "/auth/signout" },
   ]
     .filter((t) => t)
