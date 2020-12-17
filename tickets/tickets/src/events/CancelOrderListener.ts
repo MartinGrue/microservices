@@ -15,14 +15,16 @@ export class CancelOrderListener extends Listener<OrderCancelledEvent> {
     console.log("ticket found");
     ticket.set({ orderId: undefined });
     await ticket.save();
-    await new UpdateTicketPublisher(this.client).publish({
-      id: ticket.id,
-      price: ticket.price,
-      title: ticket.title,
-      userId: ticket.userId,
-      orderId: ticket.orderId,
-      version: ticket.version,
-    });
+    if (ticket.id) {
+      await new UpdateTicketPublisher(this.client).publish({
+        id: ticket.id,
+        price: ticket.price,
+        title: ticket.title,
+        userId: ticket.userId,
+        orderId: ticket.orderId,
+        version: ticket.version,
+      });
+    }
 
     msg.ack();
   };

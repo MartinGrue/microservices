@@ -12,7 +12,7 @@ import { body } from "express-validator";
 import { CreateOrderPublisher } from "../events/CreateOrderPublisher";
 import { natsWrapper } from "../NatsWrapper";
 
-const EXPIRATION_WINDOW_SECONDS = 1 * 60;
+const EXPIRATION_WINDOW_SECONDS = 10 * 60;
 const router = express.Router();
 
 router.post(
@@ -30,7 +30,7 @@ router.post(
     try {
       const { ticketId } = req.body;
       const ticket = await Ticket.findById(ticketId);
-      console.log("ticket found: ", ticket)
+      console.log("ticket found: ", ticket);
       if (!ticket) {
         throw new BadRequestError("Can not find Ticket");
       }
@@ -49,17 +49,20 @@ router.post(
         userId: req.currentUser!.currentUser!.userId,
       });
       await order.save();
-      await new CreateOrderPublisher(natsWrapper.client).publish({
-        id: order.id,
-        version: order.version,
-        status: OrderStatus.Created,
-        userId: order.userId,
-        expiresAt: order.expiresAt.toISOString(),
-        ticket: {
-          id: ticket.id,
-          price: ticket.price,
-        },
-      });
+      if (order.id && ticket.id) {
+        await new CreateOrderPublisher(natsWrapper.client).publish({
+          id: order.id,
+          version: order.version,
+          status: OrderStatus.Created,
+          userId: order.userId,
+          expiresAt: order.expiresAt.toISOString(),
+          ticket: {
+            id: ticket.id,
+            price: ticket.price,
+          },
+        });
+      }
+
       return res.status(201).send(order);
     } catch (error) {
       next(error);

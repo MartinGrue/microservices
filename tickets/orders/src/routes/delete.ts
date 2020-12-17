@@ -30,13 +30,16 @@ router.delete(
 
       order.status = OrderStatus.Cancelled;
       await order.save();
-      new CancelOrderPublisher(natsWrapper.client).publish({
-        id: order.id,
-        version: order.version,
-        ticket: {
-          id: order.ticket.id,
-        },
-      });
+      if (order.id && order.ticket.id) {
+        new CancelOrderPublisher(natsWrapper.client).publish({
+          id: order.id,
+          version: order.version,
+          ticket: {
+            id: order.ticket.id,
+          },
+        });
+      }
+
       res.status(204).send(order);
     } catch (error) {
       next(error);
