@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({ currentUser }) => {
             <a className="navbar-brand">TicketsDev</a>
           </Link>
         </div>
-
+        <p>{currentUser.currentUser.email}</p>
         <div style={{ marginRight: "5rem" }}>
           <ul className="nav d-flex align-items-center">{links} </ul>
         </div>

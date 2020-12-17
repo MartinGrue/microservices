@@ -9,46 +9,47 @@ interface PageProps extends InjectionProps {
   order: IOrder;
 }
 const OrderShow: NextPage<PageProps> = ({ order, currentUser }) => {
-  //   const [timeLeft, setTimeLeft] = useState(0);
-  //   useEffect(() => {
-  //     const findTimeLeft = () => {
-  //       const now = new Date();
-  //       const msLeft = order.expiresAt.getTime() - now.getTime();
-  //       setTimeLeft(Math.round(msLeft / 1000));
-  //     };
+  const [timeLeft, setTimeLeft] = useState(0);
+  const findTimeLeft = () => {
+    const oderDate = new Date(order.expiresAt);
+    const msLeft = Math.abs(oderDate.getTime() - new Date().getTime());
+    setTimeLeft(Math.round(msLeft / 1000));
+  };
+  useEffect(() => {
+    findTimeLeft();
+    const timerId = setInterval(findTimeLeft, 1000);
+    console.log(timeLeft);
 
-  //     findTimeLeft();
-  //     const timerId = setInterval(findTimeLeft, 1000);
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [order]);
 
-  //     return () => {
-  //       clearInterval(timerId);
-  //     };
-  //   }, [order]);
-
-  //   if (timeLeft < 0) {
-  //     return <div>Order Expired</div>;
-  //   }
+  if (timeLeft < 0) {
+    return <div>Order Expired</div>;
+  }
 
   return (
-    <div></div>
-    // <div>
-    //   Time left to pay: {timeLeft} seconds
-    //   {/* <StripeCheckout
-    //     token={({ id }) => doRequest({ token: id })}
-    //     stripeKey="pk_test_FlLFVapGHTly3FicMdTU06SC006tWtWbNH"
-    //     amount={order.ticket.price * 100}
-    //     email={currentUser.email}
-    //   /> */}
-    //   <p>Strike Checkout here</p>
-    // </div>
+    <div>
+      Time left to pay: {timeLeft} seconds
+      {/* <StripeCheckout
+        token={({ id }) => doRequest({ token: id })}
+        stripeKey="pk_test_FlLFVapGHTly3FicMdTU06SC006tWtWbNH"
+        amount={order.ticket.price * 100}
+        email={currentUser.email}
+      /> */}
+      <p>Strike Checkout here</p>
+    </div>
   );
 };
 OrderShow.getInitialProps = async (context: Context): Promise<PageProps> => {
   try {
     console.log("in order init");
     const { orderId } = context.query;
+    console.log("ticketId", orderId);
+
     const { req, agent, currentUser } = context;
-    const order = await agent.Order.getOrder(`/api/orders/${orderId}`);
+    const order = await agent.Order.getOrder(orderId);
     console.log("order: ", order);
     return { currentUser, agent: agent, order };
   } catch (error) {

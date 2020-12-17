@@ -1,7 +1,7 @@
 export interface ICurrentUser {
     currentUser: {
       userId: string;
-      name: string;
+      email: string;
       iat: number;
     } | null;
   }

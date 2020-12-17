@@ -32,8 +32,6 @@ TicketShow.getInitialProps = async (context: Context): Promise<PageProps> => {
     const { ticketId } = context.query;
     const { req, agent, currentUser } = context;
     const ticket = await agent.Ticket.getTicket(ticketId);
-    console.log("ticket: ", ticket);
-
     return { currentUser, agent: agent, ticket };
   } catch (error) {
     console.log(error);

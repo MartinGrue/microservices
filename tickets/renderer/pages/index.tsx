@@ -17,6 +17,7 @@ interface PageProps extends InjectionProps {
 }
 
 const index: NextPage<PageProps> = ({ currentUser, tickets }) => {
+  // console.log(tickets);
   const ticketList = tickets.map((ticket) => {
     return (
       <tr key={ticket.title}>
@@ -49,9 +50,10 @@ const index: NextPage<PageProps> = ({ currentUser, tickets }) => {
 
 index.getInitialProps = async (ctx: Context): Promise<PageProps> => {
   try {
-    // console.log("\x1b[36m%s\x1b[0m", "I am cyan");
+    console.log("\x1b[36m%s\x1b[0m", "I am cyan");
     const { req, agent, currentUser } = ctx;
     const tickets = await agent.Ticket.getAllTickets();
+    // console.log(tickets);
     return { currentUser, agent, tickets };
   } catch (error) {
     const currentUser = await Promise.resolve<ICurrentUser>({

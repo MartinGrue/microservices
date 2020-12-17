@@ -14,7 +14,7 @@ import {
   AppInitialProps,
 } from "next/dist/next-server/lib/utils";
 import Header from "../components/Header";
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
 
 interface InitProps {
   currentUser: ICurrentUser;
@@ -61,12 +61,14 @@ MyApp.getInitialProps = async (
     // console.log("current user: ", currentUser);
     const customContext: Context = { ...appContext.ctx, agent, currentUser };
 
-    const pageProps = appContext.Component.getInitialProps
+    // const pageProps = appContext.Component.getInitialProps
+    //   ? await appContext.Component.getInitialProps(customContext)
+    //   : {};
+    // const appProps = await App.getInitialProps(appContext);
+    const appProps: AppInitialProps = { pageProps: null };
+    appProps.pageProps = appContext.Component.getInitialProps
       ? await appContext.Component.getInitialProps(customContext)
       : {};
-    const appProps = await App.getInitialProps(appContext);
-
-    appProps.pageProps = pageProps;
 
     return { ...appProps, currentUser, agent };
   } catch (error) {
