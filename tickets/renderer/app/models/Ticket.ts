@@ -3,7 +3,8 @@ export interface ITicket {
   title: string;
   price: number;
   userId: string;
-  orderId: string;
+  orderId?: string;
+  verison: number;
 }
 export interface NewTicketBody {
   title: string;

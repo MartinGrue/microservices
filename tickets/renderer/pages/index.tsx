@@ -53,7 +53,7 @@ index.getInitialProps = async (ctx: Context): Promise<PageProps> => {
     console.log("\x1b[36m%s\x1b[0m", "I am cyan");
     const { req, agent, currentUser } = ctx;
     const tickets = await agent.Ticket.getAllTickets();
-    // console.log(tickets);
+    console.log(tickets);
     return { currentUser, agent, tickets };
   } catch (error) {
     const currentUser = await Promise.resolve<ICurrentUser>({

@@ -18,9 +18,15 @@ const TicketShow: NextPage<PageProps> = ({ ticket, agent }) => {
       <h1>{ticket.title}</h1>
       <h4>Price: {ticket.price}</h4>
       {/* {errors} */}
-      <button onClick={() => createOrder()} className="btn btn-primary">
-        Purchase
-      </button>
+      {ticket.orderId ? (
+        <button type="button" className="btn btn-secondary btn-lg" disabled>
+          Not available
+        </button>
+      ) : (
+        <button onClick={() => createOrder()} className="btn btn-primary">
+          Purchase
+        </button>
+      )}
     </div>
   );
 };
