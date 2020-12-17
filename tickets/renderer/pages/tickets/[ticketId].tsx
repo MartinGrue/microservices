@@ -28,11 +28,10 @@ const TicketShow: NextPage<PageProps> = ({ ticket, agent }) => {
 TicketShow.getInitialProps = async (context: Context): Promise<PageProps> => {
   try {
     console.log("in ticket init");
-
     const { ticketId } = context.query;
     const { req, agent, currentUser } = context;
     const ticket = await agent.Ticket.getTicket(ticketId);
-    return { currentUser, agent: agent, ticket };
+    return { currentUser, agent, ticket };
   } catch (error) {
     console.log(error);
     return { currentUser: undefined, agent: undefined, ticket: undefined };
