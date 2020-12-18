@@ -31,7 +31,15 @@ build:
         buildCommand: ./buildtickets.sh
       sync:
         manual:
-          - src: "src/**/*.tsx"
+          - src: "src/**/*.ts"
+            dest: .
+    - image: expiration
+      context: expiration
+      custom:
+        buildCommand: ./buildexpiration.sh
+      sync:
+        manual:
+          - src: "src/**/*.ts"
             dest: .
     - image: orders
       context: orders
