@@ -18,7 +18,7 @@ const Order: React.FC<Props> = ({ order }) => {
   }, [order]);
   return (
     <li >
-      {order.ticket.title} - {order.status} - {timeLeft}
+      {order.ticket.title} - {order.status} - {timeLeft < 0 ? "timed out" : timeLeft}
     </li>
   );
 };
