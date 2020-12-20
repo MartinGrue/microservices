@@ -1,14 +1,15 @@
 import mongoose, { Model, Document, model } from "mongoose";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
-import { OrderStatus } from "@sgtickets/common";
+import { OrderStatus } from "@scope/common";
 
 interface IOrder {
-  userId: string;
+  id: string;
   price: number;
   status: OrderStatus;
+  userId: string;
 }
 
-interface OrderDocument extends Document, IOrder {
+interface OrderDocument extends Document {
   version: number;
 }
 
@@ -45,5 +46,9 @@ orderSchema.plugin(updateIfCurrentPlugin);
 const Order = model<OrderDocument, OrderModel>("orders", orderSchema);
 
 orderSchema.statics.build = (order: IOrder) => {
-  return new Order(order);
+  return new Order({
+    _id: order.id,
+    ...order,
+  });
 };
+export { Order };
