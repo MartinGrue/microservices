@@ -14,6 +14,10 @@ export interface Agent {
     getAllTickets: () => Promise<ITicket[]>;
     getTicket: (id: string | string[]) => Promise<ITicket>;
     createNewTicket: (body: NewTicketBody) => Promise<ITicket>;
+    updateTicket: (
+      id: string | string[],
+      body: NewTicketBody
+    ) => Promise<ITicket>;
   };
   Order: {
     createNewOrder: (tickerId: string | string[]) => Promise<IOrder>;
@@ -62,6 +66,10 @@ export const createAgent = (axiosInstance: AxiosInstance): Agent => {
       requests.get(`/api/tickets/${id}`),
     createNewTicket: (body: NewTicketBody): Promise<ITicket> =>
       requests.post("/api/tickets", body),
+    updateTicket: (
+      id: string | string[],
+      body: NewTicketBody
+    ): Promise<ITicket> => requests.put(`/api/tickets/${id}`, body),
   };
   const Order = {
     createNewOrder: (ticketId: string | string[]): Promise<IOrder> =>

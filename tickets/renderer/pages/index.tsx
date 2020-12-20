@@ -56,11 +56,7 @@ index.getInitialProps = async (ctx: Context): Promise<PageProps> => {
     console.log(tickets);
     return { currentUser, agent, tickets };
   } catch (error) {
-    const currentUser = await Promise.resolve<ICurrentUser>({
-      currentUser: null,
-    });
-
-    return { currentUser, agent: undefined, tickets: [] };
+    return { currentUser: null, agent: undefined, tickets: [] };
   }
 };
 export default index;

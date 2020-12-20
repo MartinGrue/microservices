@@ -18,7 +18,6 @@ const NewTicket: NextPage<PageProps> = ({ agent }) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-
     createNewTicket();
   };
   const parsePrice = (val: string) => {
