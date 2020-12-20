@@ -49,3 +49,12 @@ build:
         manual:
           - src: "src/**/*.tsx"
             dest: .
+    - image: payments
+      context: payments
+      custom:
+        buildCommand: ./buildpayments.sh
+      sync:
+        manual:
+          - src: "src/**/*.tsx"
+            dest: .
+
