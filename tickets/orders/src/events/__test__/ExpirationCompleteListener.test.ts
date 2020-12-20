@@ -49,11 +49,6 @@ it("emit an OrderCancelled event", async () => {
   expect(eventData.id).toEqual(order.id);
 });
 
-it("acks the message", async () => {
-  const { listener, data, msg } = await setup();
-  await listener.onMessage(data, msg);
-  expect(msg.ack).toHaveBeenCalled();
-});
 it("throws an error when the order to be updated can not be found", async (done) => {
   const { msg, data, listener, ticket } = await setup();
 
@@ -64,4 +59,16 @@ it("throws an error when the order to be updated can not be found", async (done)
   } catch (err) {
     return done();
   }
+});
+it("acks the message and does not change the order status, if the order is already completed", async () => {
+  const { listener, data, msg, order } = await setup();
+  order.set({ status: OrderStatus.Complete });
+  await listener.onMessage(data, msg);
+  expect(msg.ack).toHaveBeenCalled();
+  expect(order!.status).toEqual(OrderStatus.Complete);
+});
+it("acks the message", async () => {
+  const { listener, data, msg } = await setup();
+  await listener.onMessage(data, msg);
+  expect(msg.ack).toHaveBeenCalled();
 });
