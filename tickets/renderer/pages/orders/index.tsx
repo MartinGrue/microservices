@@ -9,12 +9,31 @@ interface PageProps extends InjectionProps {
   orders: IOrder[];
 }
 const OrderIndex: NextPage<PageProps> = ({ orders }) => {
+  const OrderList = orders.map((order) => {
+    return (
+      <tr key={order.id as string}>
+        <td>{order.ticket.title}</td>
+        <td>{order.ticket.price}</td>
+        <td>
+          <Order order={order}></Order>
+        </td>
+      </tr>
+    );
+  });
   return (
-    <ul>
-      {orders.map((order) => {
-        return <Order order={order} key={order.id as string}></Order>;
-      })}
-    </ul>
+    <div>
+      <h2>Orders</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Ticket</th>
+            <th>Price</th>
+            <th>Time Left</th>
+          </tr>
+        </thead>
+        <tbody>{OrderList}</tbody>
+      </table>
+    </div>
   );
 };
 

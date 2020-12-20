@@ -17,9 +17,9 @@ const Order: React.FC<Props> = ({ order }) => {
     };
   }, [order]);
   return (
-    <li >
-      {order.ticket.title} - {order.status} - {timeLeft < 0 ? "timed out" : timeLeft}
-    </li>
+    <div>
+      {timeLeft < 0 ? "timed out" : `${timeLeft} ms`}
+    </div>
   );
 };
 export default Order;

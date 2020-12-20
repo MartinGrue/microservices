@@ -20,7 +20,7 @@ const index: NextPage<PageProps> = ({ currentUser, tickets }) => {
   // console.log(tickets);
   const ticketList = tickets.map((ticket) => {
     return (
-      <tr key={ticket.title}>
+      <tr key={ticket.id as string}>
         <td>{ticket.title}</td>
         <td>{ticket.price}</td>
         <td>

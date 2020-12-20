@@ -1,33 +1,27 @@
 import { useEffect, useState } from "react";
-import StripeCheckout from "react-stripe-checkout";
+// import StripeCheckout from "react-stripe-checkout";
 import Router from "next/router";
 import { NextPage } from "next";
 import { Context, InjectionProps } from "../_app";
 import { IOrder } from "../../app/models/Order";
 import { useTimeLeft } from "../../app/hooks/timeleft";
+import Order from "../../components/Order";
 
 interface PageProps extends InjectionProps {
   order: IOrder;
 }
 const OrderShow: NextPage<PageProps> = ({ order, currentUser }) => {
-  const { timeLeft, findTimeLeft } = useTimeLeft(order);
-
-  useEffect(() => {
-    const timerId = setInterval(findTimeLeft, 1000);
-    console.log(timeLeft);
-
-    return () => {
-      clearInterval(timerId);
-    };
-  }, [order]);
-
-  if (timeLeft < 0) {
-    return <div>Order Expired</div>;
-  }
 
   return (
     <div>
-      Time left to pay: {timeLeft} seconds
+      <h1>{`Ticket: ${order.ticket.title}`}</h1>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h1 style={{ paddingRight: "30px" }}> Time left to pay: </h1>
+        <h1>
+          <Order order={order}></Order>
+        </h1>
+      </div>
+
       {/* <StripeCheckout
         token={({ id }) => doRequest({ token: id })}
         stripeKey="pk_test_FlLFVapGHTly3FicMdTU06SC006tWtWbNH"
