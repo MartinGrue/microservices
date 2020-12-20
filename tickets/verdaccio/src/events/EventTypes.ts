@@ -57,3 +57,9 @@ export interface OrderCancelledEvent extends Event {
     ticket: { id: string };
   };
 }
+export interface ExpirationCompleteEvent extends Event {
+  subject: Subjects.ExpirationComplete;
+  data: {
+    orderId: string;
+  };
+}
