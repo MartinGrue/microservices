@@ -12,7 +12,13 @@ interface IOrder {
 interface OrderDocument extends Document {
   version: number;
 }
-
+interface OrderModel extends Model<OrderDocument> {
+  build(order: IOrder): OrderDocument;
+  findByEvent(event: {
+    id: string;
+    version: number;
+  }): Promise<OrderDocument | null>;
+}
 const orderSchema = new mongoose.Schema(
   {
     userId: {
@@ -37,13 +43,15 @@ const orderSchema = new mongoose.Schema(
     },
   }
 );
-interface OrderModel extends Model<OrderDocument> {
-  build(order: IOrder): OrderDocument;
-}
+orderSchema.statics.findByEvent = (event: { id: string; version: number }) => {
+  return Order.findOne({
+    _id: event.id,
+    version: event.version - 1,
+  });
+};
+
 orderSchema.set("versionKey", "version");
 orderSchema.plugin(updateIfCurrentPlugin);
-
-const Order = model<OrderDocument, OrderModel>("orders", orderSchema);
 
 orderSchema.statics.build = (order: IOrder) => {
   return new Order({
@@ -51,4 +59,6 @@ orderSchema.statics.build = (order: IOrder) => {
     ...order,
   });
 };
+const Order = model<OrderDocument, OrderModel>("orders", orderSchema);
+
 export { Order };
