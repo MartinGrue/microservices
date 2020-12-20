@@ -5,9 +5,11 @@ import { Order } from "./Orders";
 interface ITicket {
   title: string;
   price: number;
-  ticketId: string;
+  id: string;
 }
-export interface TicketDocument extends Document, ITicket {
+export interface TicketDocument extends Document {
+  title: string;
+  price: number;
   version: number;
   isReserved(): Promise<boolean>;
 }
@@ -60,13 +62,13 @@ ticketSchema.methods.isReserved = async function () {
 };
 ticketSchema.statics.findByEvent = (event: { id: string; version: number }) => {
   return Ticket.findOne({
-    _id: event.id, 
+    _id: event.id,
     version: event.version - 1,
   });
 };
 ticketSchema.statics.build = (ticket: ITicket) => {
   return new Ticket({
-    _id: ticket.ticketId,
+    _id: ticket.id,
     ...ticket,
   });
 };

@@ -23,6 +23,7 @@ export class ExpirationCompleteListener extends Listener<ExpirationCompleteEvent
      return  msg.ack();
     }
     order.set({ status: OrderStatus.Cancelled });
+    console.log()
     await order.save();
     if (order.id && order.ticket.id) {
       new CancelOrderPublisher(natsWrapper.client).publish({
