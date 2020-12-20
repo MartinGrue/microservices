@@ -23,6 +23,7 @@ export interface Agent {
     createNewOrder: (tickerId: string | string[]) => Promise<IOrder>;
     getOrder: (id: string | string[]) => Promise<IOrder>;
     getAll: () => Promise<IOrder[]>;
+    deleteOrder: (id: string | string[]) => Promise<IOrder>;
   };
 }
 export const createAxiosInstance = (req: IncomingMessage): AxiosInstance => {
@@ -77,6 +78,8 @@ export const createAgent = (axiosInstance: AxiosInstance): Agent => {
     getOrder: (id: string | string[]): Promise<IOrder> =>
       requests.get(`/api/orders/${id}`),
     getAll: (): Promise<IOrder[]> => requests.get(`/api/orders/`),
+    deleteOrder: (id: string | string[]): Promise<IOrder> =>
+      requests.delete(`/api/orders/${id}`),
   };
   return { axiosInstance, User, Ticket, Order };
 };
