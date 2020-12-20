@@ -12,7 +12,7 @@ import { body } from "express-validator";
 import { CreateOrderPublisher } from "../events/CreateOrderPublisher";
 import { natsWrapper } from "../NatsWrapper";
 
-const EXPIRATION_WINDOW_SECONDS = 10 * 60;
+const EXPIRATION_WINDOW_SECONDS = 1 * 60;
 const router = express.Router();
 
 router.post(

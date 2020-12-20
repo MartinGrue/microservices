@@ -8,7 +8,7 @@ interface PageProps extends InjectionProps {
 }
 const TicketShow: NextPage<PageProps> = ({ ticket, agent }) => {
   const createOrder = async () => {
-    console.log(ticket.id);
+    // console.log(ticket.id);
     const order = await agent.Order.createNewOrder(ticket.id);
     Router.push("/orders/[orderId]", `/orders/${order.id}`);
   };
@@ -37,6 +37,7 @@ TicketShow.getInitialProps = async (context: Context): Promise<PageProps> => {
     const { ticketId } = context.query;
     const { req, agent, currentUser } = context;
     const ticket = await agent.Ticket.getTicket(ticketId);
+    console.log("ticket in ticket init: ", ticket);
     return { currentUser, agent, ticket };
   } catch (error) {
     console.log(error);
