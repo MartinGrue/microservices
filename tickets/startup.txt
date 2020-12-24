@@ -7,6 +7,7 @@ compose networking between minikube and verdaccio
  
 add npm user to host of minikube to allow publishing npm packages to verdaccio (or modify the verdaccio config)
 start minikube with docker driver
+minikube start --vm-driver=docker --container-runtime=docker --v=10 --cpus 4 --memory 8192
 
 configure minikube:
 minikube addons enable ingress
