@@ -2,14 +2,16 @@ import mongoose, { Model, Document, model } from "mongoose";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 import { OrderStatus } from "@scope/common";
 
-interface IOrder {
-  id: string;
+interface OrderCommonProps {
   price: number;
   status: OrderStatus;
   userId: string;
 }
+interface IOrder extends OrderCommonProps {
+  id: string;
+}
 
-interface OrderDocument extends Document {
+interface OrderDocument extends Document, OrderCommonProps {
   version: number;
 }
 interface OrderModel extends Model<OrderDocument> {
