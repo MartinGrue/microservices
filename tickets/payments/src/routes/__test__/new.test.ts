@@ -35,7 +35,7 @@ it("returns a 401 when purchasing an order that doesnt belong to the user", asyn
     })
     .expect(401);
 });
-it("returns a 400 when purchasing a cancelled order", async () => {
+it("returns a 404 when purchasing a cancelled order", async () => {
   const userId = mongoose.Types.ObjectId().toHexString();
   const order = Order.build({
     id: mongoose.Types.ObjectId().toHexString(),
@@ -47,12 +47,12 @@ it("returns a 400 when purchasing a cancelled order", async () => {
 
   await request(app)
     .post("/api/payments")
-    .set("Cookie", getAuthCookie())
+    .set("Cookie", getAuthCookie(userId))
     .send({
       orderId: order.id,
       token: "asdlkfj",
     })
-    .expect(400);
+    .expect(404);
 });
 it("returns a 201 with valid inputs", async () => {
   const userId = mongoose.Types.ObjectId().toHexString();
