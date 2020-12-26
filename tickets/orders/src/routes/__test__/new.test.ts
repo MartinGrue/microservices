@@ -46,7 +46,7 @@ it("returns an 400 error if a invalid ticketId is provided in the body", async (
 });
 it("returns 401 if the user is not allowed to create an order", async () => {
   const ticket = Ticket.build({
-    ticketId: new mongoose.Types.ObjectId().toHexString(),
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -59,7 +59,7 @@ it("returns 401 if the user is not allowed to create an order", async () => {
 });
 it("returns 404 if the tickerid is valid but can not be found", async () => {
   const ticket = Ticket.build({
-    ticketId: new mongoose.Types.ObjectId().toHexString(),
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -73,7 +73,7 @@ it("returns 404 if the tickerid is valid but can not be found", async () => {
 });
 it("returns an error if the ticket is already reserved", async () => {
   const ticket = Ticket.build({
-    ticketId: new mongoose.Types.ObjectId().toHexString(),
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -92,7 +92,7 @@ it("returns an error if the ticket is already reserved", async () => {
 });
 it("creates an order if the input is correct", async () => {
   const ticket = Ticket.build({
-    ticketId: new mongoose.Types.ObjectId().toHexString(),
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -109,7 +109,7 @@ it("creates an order if the input is correct", async () => {
 });
 it("publishes an event", async () => {
   const ticket = Ticket.build({
-    ticketId: new mongoose.Types.ObjectId().toHexString(),
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });

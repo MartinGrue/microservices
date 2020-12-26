@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import { CancelOrderListener } from "./events/CancelOrderListener";
+import { CreateOrderListener } from "./events/CreateOrderListener";
 import { natsWrapper } from "./NatsWrapper";
 
 
@@ -35,7 +37,8 @@ const start = async () => {
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
 
-    
+    new CreateOrderListener(natsWrapper.client).listen();
+    new CancelOrderListener(natsWrapper.client).listen();
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -45,6 +48,8 @@ const start = async () => {
   } catch (err) {
     console.error(err);
   }
+
+
 
   app.listen(3000, () => {
     console.log("Listening on port 3000!!!!!!!!");
