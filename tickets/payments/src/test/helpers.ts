@@ -1,8 +1,8 @@
 import jsonwebtoken from "jsonwebtoken";
 import mongoose from "mongoose";
-export const getAuthCookie = (): string[] => {
+export const getAuthCookie = (userId?: string): string[] => {
   process.env.JWT_KEY = "Token_KEY_GOES_HERE";
-  const userId = mongoose.Types.ObjectId().toHexString();
+  userId ? userId : mongoose.Types.ObjectId().toHexString();
   const email = "test@test.com";
 
   const token = jsonwebtoken.sign({ userId, email }, process.env.JWT_KEY!);
