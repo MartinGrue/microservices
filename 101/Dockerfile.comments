@@ -1,8 +1,0 @@
-FROM node:alpine
-WORKDIR /app/comments
-COPY /comments/package.json ./
-COPY ./shared /app/shared
-COPY /comments/ ./
-
-RUN npm install 
-CMD ["npm", "run","start:watch"]

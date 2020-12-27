@@ -1,8 +1,0 @@
-FROM node:alpine
-WORKDIR /app/eventbus
-COPY /eventbus/package.json ./
-COPY ./shared /app/shared
-COPY /eventbus/ ./
-
-RUN npm install 
-CMD ["npm", "run","start:watch"]
