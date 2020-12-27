@@ -1,8 +1,0 @@
-FROM node:alpine
-WORKDIR /app/moderation
-COPY /moderation/package.json ./
-COPY ./shared /app/shared
-COPY ./moderation/ ./
-
-RUN npm install 
-CMD ["npm", "run","start:watch"]

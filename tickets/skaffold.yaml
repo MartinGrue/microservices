@@ -4,8 +4,8 @@ deploy:
   kubeContext: minikube
   kubectl:
     manifests:
-      - ./kubernetes/*
-build:
+      - ./kubernetes/*      
+      build:
   local:
     push: false
   artifacts:
@@ -57,4 +57,3 @@ build:
         manual:
           - src: "src/**/*.tsx"
             dest: .
-
