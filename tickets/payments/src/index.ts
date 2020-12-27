@@ -4,7 +4,6 @@ import { CancelOrderListener } from "./events/CancelOrderListener";
 import { CreateOrderListener } from "./events/CreateOrderListener";
 import { natsWrapper } from "./NatsWrapper";
 
-
 const start = async () => {
   console.log("Starting...");
 
@@ -48,8 +47,6 @@ const start = async () => {
   } catch (err) {
     console.error(err);
   }
-
-
 
   app.listen(3000, () => {
     console.log("Listening on port 3000!!!!!!!!");

@@ -3,7 +3,7 @@ import request from "supertest";
 import { OrderStatus } from "@scope/common";
 import { app } from "../../app";
 import { getAuthCookie } from "../../test/helpers";
-import { stripe } from "../../stripe";
+import { getStripe } from "../../stripe";
 import { Order } from "../../models/Orders";
 import { Payment } from "../../models/Payments";
 
@@ -73,8 +73,8 @@ it("returns a 201 with valid inputs", async () => {
       orderId: order.id,
     })
     .expect(201);
-
-  const stripeCharges = await stripe.charges.list({ limit: 50 });
+  const stripeObj = getStripe();
+  const stripeCharges = await stripeObj.charges.list({ limit: 50 });
   const stripeCharge = stripeCharges.data.find((charge) => {
     return charge.amount === price * 100;
   });

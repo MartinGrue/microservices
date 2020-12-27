@@ -7,7 +7,7 @@ import {
   NotAuthorizedError,
   OrderStatus,
 } from "@scope/common";
-import { stripe } from "../stripe";
+import { getStripe } from "../stripe";
 import { Order } from "../models/Orders";
 import { Payment } from "../models/Payments";
 import { CreatePaymentsPublisher } from "../events/CreatePaymentsPublisher";
@@ -20,8 +20,6 @@ router.post(
   [body("token").not().isEmpty(), body("orderId").not().isEmpty()],
   validateRequest,
   async (req: Request, res: Response) => {
-    console.log("stripe key: ", process.env.STRIPE_KEY)
-    console.log("stripe key trimmed: ", process.env.STRIPE_KEY?.trim())
     const { token, orderId } = req.body;
 
     const order = await Order.findById(orderId);
@@ -35,8 +33,8 @@ router.post(
     if (order.status === OrderStatus.Cancelled) {
       throw new BadRequestError("Cannot pay for an cancelled order");
     }
-    console.log("token: ", token);
-    const charge = await stripe.charges.create({
+    const stripeObj = getStripe();
+    const charge = await stripeObj.charges.create({
       currency: "usd",
       amount: order.price * 100,
       source: token,

@@ -1,5 +1,8 @@
 import Stripe from "stripe";
 
-export const stripe = new Stripe(process.env.STRIPE_KEY!.trim(), {
-  apiVersion: "2020-08-27",
-});
+export const getStripe = () => {
+  const trimmedSecret = process.env.STRIPE_KEY?.trim();
+  return new Stripe(trimmedSecret!, {
+    apiVersion: "2020-08-27",
+  });
+};
