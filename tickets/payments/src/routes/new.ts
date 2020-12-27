@@ -46,11 +46,11 @@ router.post(
     });
     await payment.save();
     if (payment.id) {
-      // new CreatePaymentsPublisher(natsWrapper.client).publish({
-      //   id: payment.id,
-      //   orderId: payment.orderId,
-      //   stripeId: payment.stripeId,
-      // });
+      new CreatePaymentsPublisher(natsWrapper.client).publish({
+        id: payment.id,
+        orderId: payment.orderId,
+        stripeId: payment.stripeId,
+      });
     }
 
     res.status(201).send({ id: payment.id });
