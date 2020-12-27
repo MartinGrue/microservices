@@ -6,6 +6,7 @@ import { useTimeLeft } from "../../app/hooks/timeleft";
 import { Context, InjectionProps } from "../_app";
 import Order from "../../components/Order";
 import { OrderStatus } from "@scope/common";
+import axios from "axios";
 interface PageProps extends InjectionProps {
   orders: IOrder[];
 }
@@ -14,7 +15,8 @@ const OrderIndex: NextPage<PageProps> = ({ orders, agent }) => {
 
   const deleteOrder = async (orderToDelete: IOrder) => {
     try {
-      await agent.Order.deleteOrder(orderToDelete.id);
+      await axios.delete(`/api/orders/${orderToDelete.id}`);
+      // await agent.Order.deleteOrder(orderToDelete.id);
       const newOrders = ordersState.reduce((acc, val) => {
         if (val.id === orderToDelete.id) {
           val.status = OrderStatus.Cancelled;

@@ -1,4 +1,5 @@
 import { currentUser } from "@scope/common";
+import axios from "axios";
 import { NextPage } from "next";
 import Router from "next/router";
 import { ITicket } from "../../app/models/Ticket";
@@ -11,7 +12,9 @@ interface PageProps extends InjectionProps {
 const TicketShow: NextPage<PageProps> = ({ ticket, agent, currentUser }) => {
   const createOrder = async () => {
     // console.log(ticket.id);
-    const order = await agent.Order.createNewOrder(ticket.id);
+    const res = await axios.post(`/api/orders`, { ticketId: ticket.id });
+    // const order = await agent.Order.createNewOrder(ticket.id);
+    const order = res.data;
     Router.push("/orders/[orderId]", `/orders/${order.id}`);
   };
 

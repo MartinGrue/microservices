@@ -2,14 +2,16 @@ import { useState } from "react";
 import Router from "next/router";
 import { Context, InjectionProps } from "../_app";
 import { NextPage } from "next";
+import axios from "axios";
 interface PageProps extends InjectionProps {}
 const NewTicket: NextPage<PageProps> = ({ agent }) => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState<number>();
   const createNewTicket = async () => {
     try {
-      const newTicket = await agent.Ticket.createNewTicket({ title, price });
-      console.log(newTicket);
+      // const newTicket = await agent.Ticket.createNewTicket({ title, price });
+      const res = await axios.post("/api/tickets", { title, price });
+      console.log(res.data);
       Router.push("/");
     } catch (error) {
       console.log(error);

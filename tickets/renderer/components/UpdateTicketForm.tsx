@@ -12,13 +12,17 @@ export const UpdateTicketForm: React.FC<UpdateTicketFormProps> = ({
   agent,
 }) => {
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState<number>();
+  const [price, setPrice] = useState<number>(0);
   const updateTicket = async () => {
     try {
-      const ticket = await agent.Ticket.updateTicket(ticketId, {
+      const ticket = axios.put(`/api/tickets/${ticketId}`, {
         title,
         price,
       });
+      // const ticket = await agent.Ticket.updateTicket(ticketId, {
+      //   title,
+      //   price,
+      // });
       console.log(ticket);
       Router.push("/");
     } catch (error) {
@@ -26,10 +30,14 @@ export const UpdateTicketForm: React.FC<UpdateTicketFormProps> = ({
     }
   };
   useEffect(() => {
-    agent.Ticket.getTicket(ticketId).then((ticket) => {
-      setTitle(ticket.title);
-      setPrice(ticket.price);
+    axios.get(`/api/tickets/${ticketId}`).then((res) => {
+      setTitle(res.data.title);
+      parsePrice(res.data.price);
     });
+    // agent.Ticket.getTicket(ticketId).then((ticket) => {
+    //   setTitle(ticket.title);
+    //   setPrice(ticket.price);
+    // });
   }, []);
   const onSubmit = (event) => {
     event.preventDefault();
@@ -58,7 +66,7 @@ export const UpdateTicketForm: React.FC<UpdateTicketFormProps> = ({
           <div className="form-group">
             <label>Price</label>
             <input
-              // value={price}
+              value={price}
               onChange={(e) => parsePrice(e.target.value)}
               className="form-control"
             />
