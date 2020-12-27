@@ -6,7 +6,8 @@
   "scripts": {
     "start:watch": "nodemon",
     "start": "ts-node-dev src/index.ts",
-    "test": "jest --watchAll --no-cache --coverage"
+    "test": "jest --watchAll --no-cache --coverage",
+    "test:ci":"jest"
   },
   "jest": {
     "preset": "ts-jest",
