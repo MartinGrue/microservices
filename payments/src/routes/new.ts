@@ -19,6 +19,7 @@ router.post(
   requireAuth,
   [body("token").not().isEmpty(), body("orderId").not().isEmpty()],
   validateRequest,
+
   async (req: Request, res: Response) => {
     const { token, orderId } = req.body;
 
@@ -36,9 +37,10 @@ router.post(
     const stripeObj = getStripe();
     const charge = await stripeObj.charges.create({
       currency: "usd",
-      amount: order.price * 100,
+      amount: order.price,
       source: token,
     });
+
     const payment = Payment.build({
       orderId,
       stripeId: charge.id,
@@ -51,8 +53,8 @@ router.post(
         stripeId: payment.stripeId,
       });
     }
-    console.log("paymentId: ", payment.id);
-    res.status(201).send({ id: payment.id });
+
+    res.sendStatus(201);
   }
 );
 

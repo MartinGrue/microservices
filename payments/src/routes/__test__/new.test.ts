@@ -64,27 +64,27 @@ it("returns a 201 with valid inputs", async () => {
     status: OrderStatus.Created,
   });
   await order.save();
-
-  await request(app)
+  const response = await request(app)
     .post("/api/payments")
     .set("Cookie", getAuthCookie(userId))
     .send({
-      token: "tok_visa",
+      token: "tok_mastercard",
       orderId: order.id,
-    })
-    .expect(201);
-  // const stripeObj = getStripe();
-  // const stripeCharges = await stripeObj.charges.list({ limit: 50 });
-  // const stripeCharge = stripeCharges.data.find((charge) => {
-  //   return charge.amount === price * 100;
-  // });
+    });
+  expect(response.status).toEqual(201);
 
-  // expect(stripeCharge).toBeDefined();
-  // expect(stripeCharge!.currency).toEqual("usd");
+  const stripeObj = getStripe();
+  const stripeCharges = await stripeObj.charges.list({ limit: 50 });
+  const stripeCharge = stripeCharges.data.find((charge) => {
+    return charge.amount === price;
+  });
 
-  // const payment = await Payment.findOne({
-  //   orderId: order.id,
-  //   stripeId: stripeCharge!.id,
-  // });
-  // expect(payment).not.toBeNull();
-}, 120000);
+  expect(stripeCharge).toBeDefined();
+  expect(stripeCharge!.currency).toEqual("usd");
+
+  const payment = await Payment.findOne({
+    orderId: order.id,
+    stripeId: stripeCharge!.id,
+  });
+  expect(payment).not.toBeNull();
+});
