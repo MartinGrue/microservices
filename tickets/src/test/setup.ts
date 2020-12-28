@@ -1,7 +1,11 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 
-const mongoServer = new MongoMemoryServer();
+const mongoServer = new MongoMemoryServer({
+  binary: {
+    version: "4.4.1",
+  },
+});
 jest.mock("../NatsWrapper.ts");
 
 beforeAll(async () => {

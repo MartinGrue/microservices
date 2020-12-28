@@ -6,7 +6,8 @@
   "scripts": {
     "start:watch": "nodemon",
     "start": "ts-node-dev src/index.ts",
-    "test": "jest --watchAll --no-cache --coverage"
+    "test": "jest --watchAll --no-cache --coverage",
+    "test:ci": "jest --runInBand"
   },
   "jest": {
     "preset": "ts-jest",
@@ -55,8 +56,13 @@
     "@types/jest": "^26.0.10",
     "@types/supertest": "^2.0.10",
     "jest": "^26.4.2",
-    "mongodb-memory-server": "^6.6.6",
+    "mongodb-memory-server": "6.9.2",
     "supertest": "^4.0.2",
     "ts-jest": "^26.2.0"
+  },
+  "config": {
+    "mongodbMemoryServer": {
+      "version": "4.4.1"
+    }
   }
 }
