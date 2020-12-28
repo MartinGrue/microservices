@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - run:
           echo "//scope.bytesafe.dev/r/default/:_authToken=${{secrets.BYTESAFE_TOKEN}}" > ~/.npmrc &&
-          cd auth &&
+          cd payments &&
           npm update @scope/common --registry https://scope.bytesafe.dev/r/default/ &&
           npm install --registry https://scope.bytesafe.dev/r/default/ &&
           npm run test:ci
