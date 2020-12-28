@@ -1,13 +1,18 @@
 name: tests-auth
 
-on:
-  pull_request:
-    paths:
-      - 'auth/**'
-
+# on:
+#   pull_request:
+#     paths:
+#       - 'auth/**'
+on: push
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd auth && npm install && npm run test:ci
+      - run:
+          echo "//scope.bytesafe.dev/r/default/:_authToken=${{secrets.BYTESAFE_TOKEN}}" > ~/.npmrc &&
+          cd auth &&
+          npm update @scope/common --registry https://scope.bytesafe.dev/r/default/ &&
+          npm install --registry https://scope.bytesafe.dev/r/default/ &&
+          npm run test:ci
