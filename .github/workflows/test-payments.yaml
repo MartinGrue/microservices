@@ -16,3 +16,5 @@ jobs:
           npm update @scope/common --registry https://scope.bytesafe.dev/r/default/ &&
           npm install --registry https://scope.bytesafe.dev/r/default/ &&
           npm run test:ci
+        env:
+          STRIPE_KEY: ${{ secrets.STRIPE_KEY }}

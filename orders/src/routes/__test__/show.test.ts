@@ -42,7 +42,7 @@ it("returns 404 if the order is not found", async () => {
 it("returns 401 if the user is not allowed to view the order", async () => {
   const user1 = getAuthCookie();
   const ticket = Ticket.build({
-    ticketId: new mongoose.Types.ObjectId().toHexString(),
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -65,7 +65,7 @@ it("returns 401 if the user is not allowed to view the order", async () => {
 it("returns the order and status code 200 if the input is valid", async () => {
   const user1 = getAuthCookie();
   const ticket = Ticket.build({
-    ticketId: new mongoose.Types.ObjectId().toHexString(),
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });

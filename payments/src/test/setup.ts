@@ -7,6 +7,7 @@ const mongoServer = new MongoMemoryServer({
   },
 });
 jest.mock("../NatsWrapper.ts");
+jest.setTimeout(120000) //this works i dont know why
 process.env.STRIPE_KEY =
   "sk_test_51I2f5fL6xj75mK0G7CRFFRspeeWEIYAPFcDkfYCRHVi59SFR5H00xlFdQwLMfWmQMWdigyIwTf64SNnW45ODXzHK00hxgOzq6L";
 
@@ -23,6 +24,10 @@ beforeEach(async () => {
   jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
   collections.forEach(async (collection) => await collection.deleteMany({}));
+});
+afterEach(() => {
+  jest.clearAllMocks();
+  jest.resetAllMocks();
 });
 afterAll(async () => {
   await mongoServer.stop();

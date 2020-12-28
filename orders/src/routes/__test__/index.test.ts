@@ -10,7 +10,7 @@ const cookieUser2 = getAuthCookie();
 
 const buildTicket = async () => {
   const ticket = Ticket.build({
-    ticketId: new mongoose.Types.ObjectId().toHexString(),
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
