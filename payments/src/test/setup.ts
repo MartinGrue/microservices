@@ -1,13 +1,12 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
-
 const mongoServer = new MongoMemoryServer({
   binary: {
     version: "4.4.1",
   },
 });
 jest.mock("../NatsWrapper.ts");
-jest.setTimeout(180000) //this works i dont know why
+jest.setTimeout(180000); //this works i dont know why
 process.env.STRIPE_KEY =
   "sk_test_51I2f5fL6xj75mK0G7CRFFRspeeWEIYAPFcDkfYCRHVi59SFR5H00xlFdQwLMfWmQMWdigyIwTf64SNnW45ODXzHK00hxgOzq6L";
 
@@ -32,4 +31,5 @@ afterEach(() => {
 afterAll(async () => {
   await mongoServer.stop();
   await mongoose.connection.close();
+  await mongoose.disconnect();
 });
