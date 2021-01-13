@@ -14,8 +14,8 @@ jobs:
         with:
           node-version: '12.6.0'
       - run:
-          echo "//scope.bytesafe.dev/r/default/:_authToken=${{secrets.BYTESAFE_TOKEN}}" > ~/.npmrc &&
+          echo "//165.227.148.157:4873/:_authToken=${{secrets.DO_TOKEN}}" > ~/.npmrc &&
           cd orders &&
-          npm update @scope/common --registry https://scope.bytesafe.dev/r/default/ &&
-          npm install --registry https://scope.bytesafe.dev/r/default/ &&
+          npm update @scope/common --registry http://165.227.148.157:4873 &&
+          npm install --registry http://165.227.148.157:4873 --loglevel verbose &&
           npm run test:ci
