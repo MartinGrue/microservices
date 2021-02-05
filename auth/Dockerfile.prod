@@ -1,0 +1,7 @@
+FROM node:alpine
+WORKDIR /app
+COPY package.json .
+ENV EC2_verdaccio="http://165.227.148.157:4873"
+RUN npm install --only=prod --verbose --registry ${EC2_verdaccio}
+COPY . .
+CMD ["npm", "run", "start:watch"]

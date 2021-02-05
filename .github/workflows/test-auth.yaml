@@ -21,4 +21,3 @@ jobs:
           npm update @scope/common --registry http://165.227.148.157:4873 &&
           npm install --registry http://165.227.148.157:4873 --loglevel verbose &&
           npm run test:ci
-

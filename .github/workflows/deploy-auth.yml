@@ -1,0 +1,23 @@
+name: deploy-auth
+
+on:
+  push:
+    - master
+  paths:
+    - 'auth/**'
+
+jobs:
+  build:
+    runs-on: Ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          workdir: auth
+          dockerfile: Dockerfile.prod
+          name: martingrue/microservices/auth
+          username: ${{ secrets.GITHUB_USERNAME}}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          tags: "latest,${{ env.STATE_RELEASE_VERSION }}"
