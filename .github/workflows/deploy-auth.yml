@@ -18,7 +18,7 @@ jobs:
           workdir: auth
           dockerfile: Dockerfile.prod
           name: martingrue/microservices/auth
-          username: ${{ secrets.GITHUB_USERNAME}}
+          username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
           tags: "latest,${{ env.STATE_RELEASE_VERSION }}"
