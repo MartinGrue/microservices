@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { IOrder } from "../app/models/Order";
 import { useTimeLeft } from "../app/hooks/timeleft";
+import { OrderStatus } from "@scope/common";
 
 interface Props {
   order: IOrder;
@@ -18,7 +19,11 @@ const Order: React.FC<Props> = ({ order }) => {
   }, [order]);
   return (
     <div>
-      {timeLeft < 0 ? "timed out" : `${timeLeft} ms`}
+      {order.status === OrderStatus.Cancelled
+        ? "cancelled"
+        : timeLeft < 0
+        ? "timed out"
+        : `${timeLeft} ms`}
     </div>
   );
 };
