@@ -43,7 +43,7 @@ const ticketSchema: Schema<TicketDocument> = new mongoose.Schema(
   }
 );
 ticketSchema.set("versionKey", "version");
-ticketSchema.plugin(updateIfCurrentPlugin);
+updateIfCurrentPlugin(ticketSchema as mongoose.Schema<Document>);
 
 ticketSchema.methods.isReserved = async function () {
   // this === the ticket document that we just called 'isReserved' on

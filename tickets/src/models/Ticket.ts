@@ -6,11 +6,12 @@ interface ITicket {
   price: number;
   userId: string;
 }
-interface TicketDocument extends Document, ITicket {
+interface TicketDocument extends Document, ITicket{
   version: number;
   orderId?: string;
+  
 }
-const ticketSchema: Schema<TicketDocument> = new mongoose.Schema(
+const ticketSchema = new mongoose.Schema<TicketDocument>(
   {
     title: {
       type: String,
@@ -40,7 +41,7 @@ const ticketSchema: Schema<TicketDocument> = new mongoose.Schema(
   }
 );
 ticketSchema.set("versionKey", "version");
-ticketSchema.plugin(updateIfCurrentPlugin);
+updateIfCurrentPlugin(ticketSchema as mongoose.Schema<Document>);
 
 interface TicketModel extends Model<TicketDocument> {
   build(ticket: ITicket): TicketDocument;

@@ -41,7 +41,7 @@ const orderSchema: Schema<OrderDocument> = new mongoose.Schema(
   }
 );
 orderSchema.set("versionKey", "version");
-orderSchema.plugin(updateIfCurrentPlugin);
+updateIfCurrentPlugin(orderSchema as mongoose.Schema<Document>);
 
 interface OrderModel extends Model<OrderDocument> {
   build(order: IOrder): OrderDocument;
