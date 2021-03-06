@@ -34,7 +34,7 @@ router.post(
         version: ticket.version,
       });
     }
-
+    console.log(ticket);
     return res.status(201).send(ticket);
   }
 );
