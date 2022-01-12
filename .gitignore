@@ -2,4 +2,5 @@
 
 **/.next
 */verdaccio/build
+**/verdaccio/backup.tar
 **/coverage/
