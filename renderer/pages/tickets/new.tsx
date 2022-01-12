@@ -58,12 +58,12 @@ const NewTicket: NextPage<PageProps> = ({ agent }) => {
 NewTicket.getInitialProps = async (context: Context): Promise<PageProps> => {
   try {
     console.log("in new ticket init");
-    const { req, agent, currentUser } = context;
+    const { req, agent } = context;
 
-    return { currentUser, agent };
+    return { agent };
   } catch (error) {
     console.log(error);
-    return { currentUser: undefined, agent: undefined };
+    return {  agent: undefined };
   }
 };
 export default NewTicket;

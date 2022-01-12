@@ -26,12 +26,12 @@ interface MyProps extends AppProps {
 const MyApp: NextComponentType<AppContext, AppInitialProps, MyProps> = ({
   Component,
   pageProps,
-  currentUser,
+  
 }) => {
   // console.log("currentUser:", currentUser);
   return (
     <div>
-      <Header currentUser={currentUser}></Header>
+      {/* <Header currentUser={currentUser}></Header> */}
       <div className="container">
         <Component {...pageProps}></Component>
       </div>
@@ -41,7 +41,6 @@ const MyApp: NextComponentType<AppContext, AppInitialProps, MyProps> = ({
 
 export interface InjectionProps {
   agent: Agent;
-  currentUser: ICurrentUser;
 }
 export interface Context extends NextPageContext, InjectionProps {
   // any modifications to the default context, e.g. query types
@@ -58,8 +57,8 @@ MyApp.getInitialProps = async (
   console.log("in app init");
   try {
     const currentUser = await agent.User.fetchCurrentUser();
-    // console.log("current user: ", currentUser);
-    const customContext: Context = { ...appContext.ctx, agent, currentUser };
+    console.log("current user: ", currentUser);
+    const customContext: Context = { ...appContext.ctx, agent };
 
     // const pageProps = appContext.Component.getInitialProps
     //   ? await appContext.Component.getInitialProps(customContext)
@@ -70,11 +69,11 @@ MyApp.getInitialProps = async (
       ? await appContext.Component.getInitialProps(customContext)
       : {};
 
-    return { ...appProps, currentUser, agent };
+    return { ...appProps,  agent, };
   } catch (error) {
     const appProps = await App.getInitialProps(appContext);
 
-    return { ...appProps, currentUser: undefined, agent };
+    return { ...appProps, agent };
   }
 };
 

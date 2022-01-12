@@ -21,7 +21,7 @@ interface TicketModel extends Model<TicketDocument> {
   }): Promise<TicketDocument | null>;
 }
 
-const ticketSchema: Schema<TicketDocument> = new mongoose.Schema(
+const ticketSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -43,12 +43,13 @@ const ticketSchema: Schema<TicketDocument> = new mongoose.Schema(
   }
 );
 ticketSchema.set("versionKey", "version");
-updateIfCurrentPlugin(ticketSchema as mongoose.Schema<Document>);
+ticketSchema.plugin(updateIfCurrentPlugin)
+// updateIfCurrentPlugin(ticketSchema as mongoose.Schema<Document>);
 
 ticketSchema.methods.isReserved = async function () {
   // this === the ticket document that we just called 'isReserved' on
   const existingOrder = await Order.findOne({
-    ticket: this,
+    ticket: this as TicketDocument,
     status: {
       $in: [
         OrderStatus.Created,

@@ -8,10 +8,14 @@ interface IOrder {
   expiresAt: Date;
   ticket: TicketDocument;
 }
-interface OrderDocument extends Document, IOrder {
+interface OrderDocument extends Document {
+  userId: string;
+  status: string;
+  expiresAt: Date;
+  ticket: TicketDocument;
   version: number;
 }
-const orderSchema: Schema<OrderDocument> = new mongoose.Schema(
+const orderSchema = new mongoose.Schema(
   {
     userId: {
       type: String,

@@ -73,12 +73,12 @@ const OrderIndex: NextPage<PageProps> = ({ orders, agent }) => {
 OrderIndex.getInitialProps = async (context: Context): Promise<PageProps> => {
   try {
     console.log("in orders index init");
-    const { req, agent, currentUser } = context;
+    const { req, agent } = context;
     const orders = await agent.Order.getAll();
-    return { currentUser, agent, orders };
+    return {  agent, orders };
   } catch (error) {
     console.log(error);
-    return { currentUser: undefined, agent: undefined, orders: undefined };
+    return {  agent: undefined, orders: undefined };
   }
 };
 

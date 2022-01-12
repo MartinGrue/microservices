@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NextPage, NextPageContext, NextComponentType } from "next";
 import axios from "axios";
 import Router from "next/router";
@@ -16,21 +16,24 @@ interface PageProps extends InjectionProps {
   tickets: ITicket[];
 }
 
-const index: NextPage<PageProps> = ({ currentUser, tickets }) => {
-  // console.log(tickets);
-  const ticketList = tickets.map((ticket) => {
-    return (
-      <tr key={ticket.id as string}>
-        <td>{ticket.title}</td>
-        <td>{ticket.price}</td>
-        <td>
-          <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
-            <a>View</a>
-          </Link>
-        </td>
-      </tr>
-    );
-  });
+const index: NextPage<PageProps> = ({ tickets }) => {
+  // console.log(tickets);\
+  useEffect(() => {
+    console.log("\x1b[35m%s\x1b[0m", "I am useEffect");
+  }, []);
+  // const ticketList = tickets.map((ticket) => {
+  //   return (
+  //     <tr key={ticket.id as string}>
+  //       <td>{ticket.title}</td>
+  //       <td>{ticket.price}</td>
+  //       <td>
+  //         <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
+  //           <a>View</a>
+  //         </Link>
+  //       </td>
+  //     </tr>
+  //   );
+  // });
   return (
     <div>
       <h2>Tickets</h2>
@@ -42,7 +45,7 @@ const index: NextPage<PageProps> = ({ currentUser, tickets }) => {
             <th>Link</th>
           </tr>
         </thead>
-        <tbody>{ticketList}</tbody>
+        {/* <tbody>{ticketList}</tbody> */}
       </table>
     </div>
   );
@@ -51,12 +54,13 @@ const index: NextPage<PageProps> = ({ currentUser, tickets }) => {
 index.getInitialProps = async (ctx: Context): Promise<PageProps> => {
   try {
     console.log("\x1b[36m%s\x1b[0m", "I am cyan");
-    const { req, agent, currentUser } = ctx;
-    const tickets = await agent.Ticket.getAllTickets();
-    console.log(tickets);
-    return { currentUser, agent, tickets };
+    // const { req, agent, currentUser } = ctx;
+    // const tickets = await agent.Ticket.getAllTickets();
+    // console.log("tickets: ", tickets);
+    // return { currentUser, agent, tickets };
+    return { agent: undefined, tickets: [] };
   } catch (error) {
-    return { currentUser: null, agent: undefined, tickets: [] };
+    return {  agent: undefined, tickets: [] };
   }
 };
 export default index;

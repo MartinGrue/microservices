@@ -10,7 +10,7 @@ import Order from "../../components/Order";
 interface PageProps extends InjectionProps {
   order: IOrder;
 }
-const OrderShow: NextPage<PageProps> = ({ order, currentUser }) => {
+const OrderShow: NextPage<PageProps> = ({ order}) => {
 
   return (
     <div>
@@ -38,12 +38,12 @@ OrderShow.getInitialProps = async (context: Context): Promise<PageProps> => {
     const { orderId } = context.query;
     console.log("ticketId", orderId);
 
-    const { req, agent, currentUser } = context;
+    const { req, agent} = context;
     const order = await agent.Order.getOrder(orderId);
     console.log("order: ", order);
-    return { currentUser, agent: agent, order };
+    return { agent: agent, order };
   } catch (error) {
-    return { currentUser: undefined, agent: undefined, order: undefined };
+    return { agent: undefined, order: undefined };
   }
 };
 export default OrderShow;
