@@ -3,7 +3,7 @@ name: tests-auth
 on:
   pull_request:
     paths:
-      - 'auth/**'
+      - "auth/**"
 
 jobs:
   build:
@@ -13,7 +13,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '12.6.0'
+          node-version: "12.6.0"
       - run:
           # echo "//scope.bytesafe.dev/r/default/:_authToken=${{secrets.BYTESAFE_TOKEN}}" > ~/.npmrc &&
           echo "//165.227.148.157:4873/:_authToken=${{secrets.DO_TOKEN}}" > ~/.npmrc &&
