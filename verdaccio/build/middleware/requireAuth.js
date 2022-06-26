@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.requireAuth = void 0;
 var ErrorTypes_1 = require("../errors/ErrorTypes");
-exports.requireAuth = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+var requireAuth = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var _a;
     return __generator(this, function (_b) {
         if (((_a = req.currentUser) === null || _a === void 0 ? void 0 : _a.currentUser) === null) {
@@ -53,3 +53,4 @@ exports.requireAuth = function (req, res, next) { return __awaiter(void 0, void 
         return [2 /*return*/];
     });
 }); };
+exports.requireAuth = requireAuth;

@@ -20,12 +20,12 @@
   "license": "ISC",
   "dependencies": {
     "@scope/common": "^1.0.39",
-    "@types/bull": "^3.14.4",
-    "bull": "^3.20.0",
+    "@types/bull": "^3.15.8",
+    "bull": "^3.29.3",
     "node-nats-streaming": "^0.3.2",
-    "nodemon": "^2.0.4",
-    "ts-node-dev": "^1.0.0-pre.60",
-    "typescript": "^4.0.2"
+    "nodemon": "^2.0.18",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.7.4"
   },
   "nodemonConfig": {
     "ignore": [
@@ -41,8 +41,8 @@
     "ext": "ts"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.10",
-    "jest": "^26.4.2",
-    "ts-jest": "^26.2.0"
+    "@types/jest": "^26.0.24",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.6"
   }
 }

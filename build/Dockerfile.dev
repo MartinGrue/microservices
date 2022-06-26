@@ -1,0 +1,19 @@
+FROM node:alpine
+ENV REGISTRY="http://verdaccio:4873"
+# ENV REGISTRY="https://gruma.bytesafe.dev/r/scope/"
+
+WORKDIR /app
+COPY package.json .
+RUN printf $'//localhost:4873/:_authToken="qH06zgD7U347XHbaKd1acw==" \n\
+//gruma.bytesafe.dev/r/scope/:_authToken=01G6BF6A2J878NTEBAW5GK8Z8S \n\
+registry=https://registry.npmjs.org' >> .npmrc
+
+RUN printf "\n@scope:registry=${REGISTRY}\n" >> .npmrc
+RUN npm config set @scope/common:registry ${REGISTRY}}
+
+RUN npm install
+RUN npm -v
+# RUN npm --registry https://gruma.bytesafe.dev/r/scope/ install
+COPY . .
+RUN cat ./src/index.ts
+CMD ["npm", "run", "start:watch"]

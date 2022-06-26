@@ -1,10 +1,10 @@
-apiVersion: skaffold/v2beta3
+apiVersion: skaffold/v2beta20
 kind: Config
 deploy:
   kubeContext: minikube
   kubectl:
     manifests:
-    - ./kubernetes/*      
+      - ./kubernetes/*
 build:
   local:
     push: false
@@ -12,7 +12,9 @@ build:
     - image: auth
       context: auth
       custom:
-        buildCommand: ./buildauth.sh
+        buildCommand: ../build/build.sh auth
+        dependencies:
+          paths: ["../build/Dockerfile.dev", .]
       sync:
         manual:
           - src: "src/**/*.ts"
@@ -28,7 +30,9 @@ build:
     - image: tickets
       context: tickets
       custom:
-        buildCommand: ./buildtickets.sh
+        buildCommand: ../build/build.sh tickets
+        dependencies:
+          paths: ["../build/Dockerfile.dev", .]
       sync:
         manual:
           - src: "src/**/*.ts"
@@ -36,7 +40,9 @@ build:
     - image: expiration
       context: expiration
       custom:
-        buildCommand: ./buildexpiration.sh
+        buildCommand: ../build/build.sh expiration
+        dependencies:
+          paths: ["../build/Dockerfile.dev", .]
       sync:
         manual:
           - src: "src/**/*.ts"
@@ -44,7 +50,9 @@ build:
     - image: orders
       context: orders
       custom:
-        buildCommand: ./buildorders.sh
+        buildCommand: ../build/build.sh orders
+        dependencies:
+          paths: ["../build/Dockerfile.dev", .]
       sync:
         manual:
           - src: "src/**/*.tsx"
@@ -52,7 +60,9 @@ build:
     - image: payments
       context: payments
       custom:
-        buildCommand: ./buildpayments.sh
+        buildCommand: ../build/build.sh payments
+        dependencies:
+          paths: ["../build/Dockerfile.dev", .]
       sync:
         manual:
           - src: "src/**/*.tsx"

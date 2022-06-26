@@ -1,0 +1,1 @@
+docker build -t $IMAGE --network host --file ../build/Dockerfile.dev .
