@@ -1,19 +1,21 @@
 FROM node:alpine
 ENV REGISTRY="http://verdaccio:4873"
 # ENV REGISTRY="https://gruma.bytesafe.dev/r/scope/"
+RUN apk add curl
+RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
 
 WORKDIR /app
-COPY package.json .
 RUN printf $'//localhost:4873/:_authToken="qH06zgD7U347XHbaKd1acw==" \n\
 //gruma.bytesafe.dev/r/scope/:_authToken=01G6BF6A2J878NTEBAW5GK8Z8S \n\
 registry=https://registry.npmjs.org' >> .npmrc
-
 RUN printf "\n@scope:registry=${REGISTRY}\n" >> .npmrc
+
+COPY package.json .
 RUN npm config set @scope/common:registry ${REGISTRY}}
 
-RUN npm install
-RUN npm -v
-# RUN npm --registry https://gruma.bytesafe.dev/r/scope/ install
-COPY . .
-RUN cat ./src/index.ts
+RUN pnpm install
+# RUN npm -v
+# # RUN npm --registry https://gruma.bytesafe.dev/r/scope/ install
+COPY ./src ./src
+# RUN cat ./src/index.ts
 CMD ["npm", "run", "start:watch"]

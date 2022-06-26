@@ -20,6 +20,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^18.0.0",
+    "@types/body-parser": "^1.19.2",
     "@scope/common": "^1.0.47",
     "@types/cookie-session": "^2.0.44",
     "@types/express": "^4.17.13",

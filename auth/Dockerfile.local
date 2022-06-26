@@ -1,0 +1,26 @@
+# FROM node:alpine
+# WORKDIR /app
+# COPY package.json .
+# # ENV EC2_verdaccio="http://3.23.98.245:4873"
+# # RUN npm install --only=prod --verbose --registry ${EC2_verdaccio}
+# RUN npm install --only=prod --verbose --registry https://scope.bytesafe.dev/r/default/
+# COPY . .
+# CMD ["npm", "run", "start:watch"]
+FROM node:alpine
+RUN apk add curl
+RUN curl -L https://unpkg.com/@pnpm/self-installer | node
+# ENV REGISTRY="http://verdaccio:4873"
+# ENV REGISTRY="https://gruma.bytesafe.dev/r/scope/"
+
+WORKDIR /app
+COPY package.json .
+COPY dockerstart.sh .
+RUN printf $'//localhost:4873/:_authToken="qH06zgD7U347XHbaKd1acw==" \n\
+//gruma.bytesafe.dev/r/scope/:_authToken=01G6BF6A2J878NTEBAW5GK8Z8S \n\
+registry=https://registry.npmjs.org' >> .npmrc
+
+# RUN printf "\n@scope:registry=${REGISTRY}\n" >> .npmrc
+# RUN npm config set @scope/common:registry ${REGISTRY}}
+
+# RUN pnpm install --frozen-lockfile --prod
+CMD [ "/bin/sh","dockerstart.sh" ]
