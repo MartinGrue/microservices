@@ -28,3 +28,6 @@ docker network connect minikubenet verdaccio
 bash ./verdaccio/adduser.sh
 bash ./verdaccio/publish.sh
 test
+
+get minikube.ip [minikube ip]
+add [minikube.ip  tickets.dev] to /etc/hosts

@@ -19,14 +19,16 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    # - image: renderer
-    #   context: renderer
-    #   custom:
-    #     buildCommand: ./buildrenderer.sh
-    #   sync:
-    #     manual:
-    #       - src: "**/*.tsx"
-    #         dest: .
+    - image: renderer
+      context: renderer
+      custom:
+        buildCommand: ./buildrenderer.sh
+        # dependencies:
+        #   paths: [.]
+      sync:
+        manual:
+          - src: "pages/**/*.tsx"
+            dest: .
     - image: tickets
       context: tickets
       custom:

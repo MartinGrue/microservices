@@ -19,21 +19,22 @@ interface PageProps extends InjectionProps {
 const index: NextPage<PageProps> = ({ tickets }) => {
   // console.log(tickets);\
   useEffect(() => {
-    console.log("\x1b[35m%s\x1b[0m", "I am useEffect");
+    console.log("tickets: ");
+    // console.log("\x1b[35m%s\x1b[0m", "I am useEffect");
   }, []);
-  // const ticketList = tickets.map((ticket) => {
-  //   return (
-  //     <tr key={ticket.id as string}>
-  //       <td>{ticket.title}</td>
-  //       <td>{ticket.price}</td>
-  //       <td>
-  //         <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
-  //           <a>View</a>
-  //         </Link>
-  //       </td>
-  //     </tr>
-  //   );
-  // });
+  const ticketList = tickets.map((ticket) => {
+    return (
+      <tr key={ticket.id as string}>
+        <td>{ticket.title}</td>
+        <td>{ticket.price}</td>
+        <td>
+          <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
+            <a>View</a>
+          </Link>
+        </td>
+      </tr>
+    );
+  });
   return (
     <div>
       <h2>Tickets</h2>
@@ -45,7 +46,7 @@ const index: NextPage<PageProps> = ({ tickets }) => {
             <th>Link</th>
           </tr>
         </thead>
-        {/* <tbody>{ticketList}</tbody> */}
+        <tbody>{ticketList}</tbody>
       </table>
     </div>
   );
@@ -53,14 +54,16 @@ const index: NextPage<PageProps> = ({ tickets }) => {
 
 index.getInitialProps = async (ctx: Context): Promise<PageProps> => {
   try {
-    console.log("\x1b[36m%s\x1b[0m", "I am cyan");
-    // const { req, agent, currentUser } = ctx;
-    // const tickets = await agent.Ticket.getAllTickets();
-    // console.log("tickets: ", tickets);
-    // return { currentUser, agent, tickets };
+    // console.log("\x1b[36m%s\x1b[0m", "I am cyan");
+    const { agent } = ctx;
+    const tickets = await agent.Ticket.getAllTickets();
+    console.log("tickets: ", tickets);
+    console.log("hi:");
+
+    return { agent, tickets };
     return { agent: undefined, tickets: [] };
   } catch (error) {
-    return {  agent: undefined, tickets: [] };
+    return { agent: undefined, tickets: [] };
   }
 };
 export default index;
