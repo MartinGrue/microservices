@@ -1,0 +1,95 @@
+// ----------------------------------------
+// -- colors
+// ----------------------------------------
+   // light
+   $light-color:                    #fff                  !default;
+   $light-opposite-color:           #3d464d               !default;
+   $light-opposite-muted-color:     #999                  !default;
+   $light-opposite-alt-color:       #6c757d               !default;
+   $light-divider-color:            #ebebeb               !default;
+   // dark
+   $dark-color:                     $light-opposite-color !default;
+   $dark-opposite-color:            $light-color          !default;
+   // accent
+   $accent-color:                   #3D37F1              !default;
+   $accent-opposite-color:          $light-opposite-color !default;
+   //links
+   $link-color:                     #1a66ff               !default;
+   $link-hover-color:               #1a66ff               !default;
+
+// ----------------------------------------
+// -- helpers
+// ----------------------------------------
+   // Font Weight
+   $font-weight-thin:        100 !default;
+   $font-weight-extra-light: 200 !default;
+   $font-weight-light:       300 !default;
+   $font-weight-normal:      400 !default;
+   $font-weight-medium:      500 !default;
+   $font-weight-semi-bold:   600 !default;
+   $font-weight-bold:        700 !default;
+   $font-weight-extra-bold:  800 !default;
+   $font-weight-black:       900 !default;
+   // breakpoints
+   $breakpoints: (
+      xs-start: 0px,
+      xs-end:   575px,
+      sm-start: 576px,
+      sm-end:   767px,
+      md-start: 768px,
+      md-end:   991px,
+      lg-start: 992px,
+      lg-end:   1199px,
+      xl-start: 1200px
+   );
+// ----------------------------------------
+// -- body
+// ----------------------------------------
+$body-bg:               $light-color                !default;
+$body-font-color:       $light-opposite-color       !default;
+$body-font-muted-color: $light-opposite-muted-color !default;
+$body-font-alt-color:   $light-opposite-alt-color   !default;
+$body-font-family:      'Roboto', 'sans-serif'      !default;
+$body-font-size:        16px                        !default;
+$body-font-weight:      $font-weight-normal         !default;
+$body-line-height:      1.5                         !default;
+$body-divider-color:    $light-divider-color        !default;
+// ----------------------------------------
+// -- common
+// ----------------------------------------
+   // ----------------------------------------
+   // -- headers
+   // ----------------------------------------
+   $headers-font-family: null                 !default;
+   $headers-font-weight: $font-weight-bold    !default;
+   $headers-font-style:  null                 !default;
+   // h1
+   $h1-font-family:      $headers-font-family !default;
+   $h1-font-size:        36px                 !default;
+   $h1-font-weight:      $headers-font-weight !default;
+   $h1-font-style:       $headers-font-style  !default;
+   // h2
+   $h2-font-family:      $headers-font-family !default;
+   $h2-font-size:        32px                 !default;
+   $h2-font-weight:      $headers-font-weight !default;
+   $h2-font-style:       $headers-font-style  !default;
+   // h3
+   $h3-font-family:      $headers-font-family !default;
+   $h3-font-size:        28px                 !default;
+   $h3-font-weight:      $headers-font-weight !default;
+   $h3-font-style:       $headers-font-style  !default;
+   // h4
+   $h4-font-family:      $headers-font-family !default;
+   $h4-font-size:        24px                 !default;
+   $h4-font-weight:      $headers-font-weight !default;
+   $h4-font-style:       $headers-font-style  !default;
+   // h5
+   $h5-font-family:      $headers-font-family !default;
+   $h5-font-size:        20px                 !default;
+   $h5-font-weight:      $headers-font-weight !default;
+   $h5-font-style:       $headers-font-style  !default;
+   // h6
+   $h6-font-family:      $headers-font-family !default;
+   $h6-font-size:        16px                 !default;
+   $h6-font-weight:      $headers-font-weight !default;
+   $h6-font-style:       $headers-font-style  !default;
