@@ -31,7 +31,7 @@ router.post(
       const { ticketId } = req.body;
       const ticket = await Ticket.findById(ticketId);
       console.log("ticket found: ", ticket);
-      if (!ticket) {
+      if (!ticket) { 
         throw new BadRequestError("Can not find Ticket");
       }
       const isReserved = await ticket.isReserved();

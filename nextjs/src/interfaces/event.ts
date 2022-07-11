@@ -1,24 +1,25 @@
+import { type } from "os";
 import { IArtist, IArtistDef } from "./artist";
 import { ILocation } from "./location";
 export type IEventImagesDef = string | string[];
 export type IEventArtistDef = string | string[];
-
+export type IEventLocation = string;
 export interface IEventDef {
   slug?: string;
   name: string;
   date: string;
-  location: ILocation;
+  location: IEventLocation;
   genre?: string;
   images?: IEventImagesDef;
-  artists?: IEventArtistDef[];
+  artists?: IEventArtistDef;
 }
 export interface IEvent {
   id: number;
   slug: string;
   name: string;
   date: string;
-  location: ILocation;
-  genre: string;
+  location: ILocation | null;
+  genre: string | null;
   images: string[];
-  artists: IArtist[];
+  artists: IArtist[] | null;
 }

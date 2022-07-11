@@ -6,7 +6,7 @@ export interface IArtistDef {
   name: string;
   slug?: string;
   genre: string;
-  events?: IArtistEventDef[];
+  events?: IArtistEventDef;
   images?: IArtistImagesDef;
 }
 
@@ -15,6 +15,6 @@ export interface IArtist {
   name: string;
   slug: string;
   genre: string;
-  events: IEvent[];
+  events: IEvent[] | null;
   images: string[];
 }

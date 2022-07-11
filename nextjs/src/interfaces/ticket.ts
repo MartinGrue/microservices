@@ -1,13 +1,17 @@
-export interface Ticket {
-  id: string;
+export interface ITicketDef {
   title: string;
-  price: string;
-  oderId: string;
-  count: number;
+  price: number;
+  orderid: number | null;
 }
-export interface IEventTicket extends Ticket {
-  eventId: string;
+export interface ITicket {
+  id: number;
+  title: string;
+  price: number;
+  orderid: number | null;
 }
-export interface IUserTicket extends Ticket {
+export interface IEventTicket extends ITicket {
+  eventslug: string;
+}
+export interface IUserTicket extends ITicket {
   userId: string;
 }
